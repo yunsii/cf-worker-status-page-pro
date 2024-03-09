@@ -1,6 +1,6 @@
 import type { PageContext } from 'vike/types'
 
-import { getStore } from '#src/server/api/store/_helpers'
+import { getStore } from '#src/server/api/store/helpers'
 import { isWorkerEnv } from '#src/server/helpers'
 
 export async function data(pageContext: PageContext) {
@@ -21,7 +21,6 @@ export async function data(pageContext: PageContext) {
     console.debug('Error ignored in non worker env.')
     return {
       kvData: null,
-      r2Data: null,
     }
   }
 }

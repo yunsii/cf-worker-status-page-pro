@@ -1,5 +1,3 @@
-export const enabledR2 = typeof ENABLED_R2 !== 'undefined' && ENABLED_R2 === 'yes'
-
 // eslint-disable-next-line ts/ban-ts-comment
 // @ts-expect-error
 export const isWorkerEnv = typeof importScripts === 'function'

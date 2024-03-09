@@ -1,4 +1,4 @@
-import { getStore, upsertKvStore, upsertR2Store } from './_helpers'
+import { getStore, upsertKvStore } from './helpers'
 
 import { ApiManager } from '#src/server/helpers'
 
@@ -13,23 +13,16 @@ export function defineStoreApi() {
   })
   ApiManager.define({
     method: 'POST',
-    pathname: ['/api/store/kv', '/api/store/r2'],
+    pathname: ['/api/store'],
     headers: [
       {
         key: 'content-type',
         value: 'text',
       },
     ],
-    runner: async (request, url) => {
+    runner: async (request) => {
       const text = await request.text()
-
-      if (url.pathname.endsWith('kv')) {
-        await upsertKvStore(text)
-      }
-      else {
-        await upsertR2Store(text)
-      }
-
+      await upsertKvStore(text)
       return new Response(null, { status: 204 })
     },
   })

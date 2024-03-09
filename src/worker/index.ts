@@ -2,7 +2,7 @@ import { handleSsr } from './ssr'
 import { handleStaticAssets } from './static-assets'
 
 import { handleFetchError } from '#src/helpers/worker'
-import { handleApi } from '#src/server/api/_root'
+import { handleApi } from '#src/server/api/root'
 
 export function isAssetUrl(url: string) {
   const { pathname } = new URL(url)

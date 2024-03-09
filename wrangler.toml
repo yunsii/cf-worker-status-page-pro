@@ -1,35 +1,14 @@
 account_id = "0db3c9ec1d741afb9a63eab399c77c3b"
-name = "starter-vike-cloudflare-react-worker"
+name = "cf-worker-status-page-pro"
 main = "./src/worker/index.ts"
 compatibility_flags = [ "streams_enable_constructors" ]
 compatibility_date = "2021-09-29"
 workers_dev = true
-kv_namespaces = [ { binding = "KV_STORE", id = "90503fbbb2fd4645b36e9c026fe01384" } ]
-
-[vars]
-ENABLED_R2 = "yes"
+# npx --no -- wrangler kv:namespace create cf-worker-status-page-pro
+kv_namespaces = [ { binding = "KV_STORE", id = "67808ba6a25347c896f4082673bf0f93" } ]
 
 [site]
 bucket = "./dist/client"
 
 [dev]
 port = 3000
-
-[[r2_buckets]]
-binding = 'R2_BUCKET'
-bucket_name = 'starter-vike-cloudflare-react-worker'
-preview_bucket_name = 'starter-vike-cloudflare-react-worker'
-
-# ###########################################################
-
-[env.production]
-kv_namespaces = [ { binding = "KV_STORE", id = "90503fbbb2fd4645b36e9c026fe01384" } ]
-
-[env.production.vars]
-# Disabled R2 in production env, in case cloudflare paid bill.
-ENABLED_R2 = "no"
-
-[[env.production.r2_buckets]]
-binding = 'R2_BUCKET'
-bucket_name = 'starter-vike-cloudflare-react-worker'
-preview_bucket_name = 'starter-vike-cloudflare-react-worker'
