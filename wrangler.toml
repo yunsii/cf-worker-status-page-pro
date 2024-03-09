@@ -12,3 +12,6 @@ bucket = "./dist/client"
 
 [dev]
 port = 3000
+
+[env.production]
+kv_namespaces = [ { binding = "KV_STORE", id = "67808ba6a25347c896f4082673bf0f93" } ]

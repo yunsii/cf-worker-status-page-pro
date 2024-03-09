@@ -8,7 +8,7 @@ function Page() {
   return (
     <>
       <h1 className='text-3xl font-bold'>Data</h1>
-      <p>Example of using R2 and KV</p>
+      <p>Example of using KV</p>
       <div>
         id
         <input
