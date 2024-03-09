@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "jsx": "react",
+    "lib": ["esnext", "DOM"],
+    "module": "esnext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "#src/*": ["./src/*"]
+    },
+    "types": ["@cloudflare/workers-types", "@types/node", "vite/client"],
+    "strict": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": ["node_modules", "dist", "test"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "es2015",
+      "moduleResolution": "node"
+    }
+  }
+}
