@@ -2,7 +2,9 @@ import janna from '@jannajs/lint/dist/eslint/index.js'
 
 export default janna({
   tailwind: true,
-  ignores: ['**/worker-configuration.d.ts'],
+  ignores: [
+    './src/worker/static-assets/public.ts',
+  ],
   settings: {
     tailwindcss: {
       config: 'tailwind.config.ts',

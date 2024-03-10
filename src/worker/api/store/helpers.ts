@@ -1,4 +1,4 @@
-import { ensureWorkerEnv } from '#src/server/helpers'
+import { ensureWorkerEnv } from '#src/worker/helpers'
 
 export const DATA_KEY = 'data'
 

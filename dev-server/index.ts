@@ -8,7 +8,7 @@ import compression from 'compression'
 
 import { getRequest, setResponse } from './request-transform'
 
-import { handleApi } from '#src/server/api/root'
+import { handleApi } from '#src/worker/api/root'
 
 const PORT = 3000
 

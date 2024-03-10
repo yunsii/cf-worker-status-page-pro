@@ -8,7 +8,7 @@
     "paths": {
       "#src/*": ["./src/*"]
     },
-    "types": ["@cloudflare/workers-types", "@types/node", "vite/client"],
+    "types": ["@cloudflare/workers-types", "@types/node", "vite/client", "@modyfi/vite-plugin-yaml/modules"],
     "strict": true,
     "noEmit": true,
     "allowSyntheticDefaultImports": true

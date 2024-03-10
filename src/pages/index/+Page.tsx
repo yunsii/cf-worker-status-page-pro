@@ -6,6 +6,7 @@ export default function Page() {
   return (
     <>
       <h1 className='text-3xl font-bold'>Welcome</h1>
+      <img src='/logo.svg' className='size-4' />
       This page is:
       <ul>
         <li>Rendered to HTML.</li>

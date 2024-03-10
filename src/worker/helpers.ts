@@ -9,6 +9,11 @@ export function ensureWorkerEnv() {
   throw new Error('Non worker env')
 }
 
+export function isApiUrl(url: string) {
+  const { pathname } = new URL(url)
+  return pathname.startsWith('/api/')
+}
+
 export interface DefinedApi {
   method: 'GET' | 'POST'
   pathname: string | string[]

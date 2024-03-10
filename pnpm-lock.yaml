@@ -79,6 +79,9 @@ devDependencies:
   '@jannajs/lint':
     specifier: 3.0.0-next.4
     version: 3.0.0-next.4(@antfu/eslint-config@2.8.0)(@commitlint/cli@18.6.1)(@commitlint/config-conventional@18.6.2)(@commitlint/types@18.6.1)(eslint-plugin-format@0.1.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react-refresh@0.4.5)(eslint-plugin-react@7.34.0)(eslint-ts-patch@8.56.0-0)(eslint-ts-patch@8.57.0-0)(husky@8.0.3)(lint-staged@15.2.2)
+  '@modyfi/vite-plugin-yaml':
+    specifier: ^1.1.0
+    version: 1.1.0(vite@5.0.12)
   '@types/compression':
     specifier: ^1.7.5
     version: 1.7.5
@@ -103,6 +106,9 @@ devDependencies:
   autoprefixer:
     specifier: ^10.4.18
     version: 10.4.18(postcss@8.4.35)
+  dedent:
+    specifier: ^1.5.1
+    version: 1.5.1
   eslint:
     specifier: npm:eslint-ts-patch@8.57.0-0
     version: /eslint-ts-patch@8.57.0-0
@@ -148,6 +154,9 @@ devDependencies:
   unplugin-polish-tagged-templates:
     specifier: 0.1.1-beta.2
     version: 0.1.1-beta.2(esbuild@0.17.19)(vite@5.0.12)(vue@3.4.21)
+  zx:
+    specifier: ^7.2.3
+    version: 7.2.3
 
 packages:
 
@@ -1310,6 +1319,19 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
+  /@modyfi/vite-plugin-yaml@1.1.0(vite@5.0.12):
+    resolution: {integrity: sha512-L26xfzkSo1yamODCAtk/ipVlL6OEw2bcJ92zunyHu8zxi7+meV0zefA9xscRMDCsMY8xL3C3wi3DhMiPxcbxbw==}
+    peerDependencies:
+      vite: ^3.2.7 || ^4.0.5 || ^5.0.5
+    dependencies:
+      '@rollup/pluginutils': 5.1.0
+      js-yaml: 4.1.0
+      tosource: 2.0.0-alpha.3
+      vite: 5.0.12(@types/node@20.11.25)
+    transitivePeerDependencies:
+      - rollup
+    dev: true
+
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -1343,6 +1365,20 @@ packages:
   /@polka/url@1.0.0-next.24:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: false
+
+  /@rollup/pluginutils@5.1.0:
+    resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@types/estree': 1.0.5
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
+    dev: true
 
   /@rollup/rollup-android-arm-eabi@4.9.6:
     resolution: {integrity: sha512-MVNXSSYN6QXOulbHpLMKYi60ppyO13W9my1qogeiAqtjb2yR4LSmfU2+POvDkLzhjYLXz9Rf9+9a3zFHW1Lecg==}
@@ -2885,6 +2921,15 @@ packages:
   /decamelize@1.2.0:
     resolution: {integrity: sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /dedent@1.5.1:
+    resolution: {integrity: sha512-+LxW+KLWxu3HW3M2w2ympwtqPrqYRzU8fqi6Fhd18fBALe15blJPI/I4+UHveMVG6lJqB4JNd4UG0S5cnVHwIg==}
+    peerDependencies:
+      babel-plugin-macros: ^3.1.0
+    peerDependenciesMeta:
+      babel-plugin-macros:
+        optional: true
     dev: true
 
   /deep-extend@0.6.0:
@@ -6877,6 +6922,11 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       eslint-visitor-keys: 3.4.3
+    dev: true
+
+  /tosource@2.0.0-alpha.3:
+    resolution: {integrity: sha512-KAB2lrSS48y91MzFPFuDg4hLbvDiyTjOVgaK7Erw+5AmZXNq4sFRVn8r6yxSLuNs15PaokrDRpS61ERY9uZOug==}
+    engines: {node: '>=10'}
     dev: true
 
   /totalist@3.0.1:
