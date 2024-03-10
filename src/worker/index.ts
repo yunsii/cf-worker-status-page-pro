@@ -1,10 +1,10 @@
 import { handleSsr } from './ssr'
 import { handleStaticAssets } from './static-assets'
 import { isAssetUrl } from './static-assets/helpers'
+import { isApiUrl } from './api/helpers'
 
 import { handleFetchError } from '#src/helpers/worker'
 import { handleApi } from '#src/worker/api/root'
-import { isApiUrl } from '#src/worker/helpers'
 
 async function handleFetchEvent(event: FetchEvent) {
   const { url } = event.request
