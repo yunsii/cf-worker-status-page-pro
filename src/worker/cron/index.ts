@@ -26,7 +26,7 @@ export async function handleCronTrigger(event: FetchEvent) {
   const { kvData } = await getStore()
   subrequests.required()
 
-  const { uncheckMonitors } = await prepareMonitors()
+  const { uncheckMonitors, lastCheckedMonitorIds } = await prepareMonitors()
   console.debug('uncheckMonitors:', uncheckMonitors)
 
   for (const monitor of uncheckMonitors) {
@@ -137,7 +137,7 @@ export async function handleCronTrigger(event: FetchEvent) {
       notified: subrequests.notifiedCount,
     },
     checks: {
-      ids: checkedIds,
+      ids: [...lastCheckedMonitorIds, ...checkedIds],
       allOperational,
     },
   }

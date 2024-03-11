@@ -85,10 +85,12 @@ export async function prepareMonitors() {
   if (uncheckMonitors.length === 0) {
     return {
       uncheckMonitors: config.monitors,
+      lastCheckedMonitorIds: [],
     }
   }
 
   return {
     uncheckMonitors,
+    lastCheckedMonitorIds,
   }
 }
