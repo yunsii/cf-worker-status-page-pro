@@ -123,6 +123,10 @@ export async function handleCronTrigger(event: FetchEvent) {
     }
   }
 
+  // Call upsertKvStore also as a subrequest,
+  // but only it have to count in advance.
+  subrequests.required()
+
   kvData.lastUpdate = {
     time: Date.now(),
     location: checkLocation,
