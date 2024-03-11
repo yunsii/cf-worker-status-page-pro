@@ -55,7 +55,7 @@ export async function handleCronTrigger(event: FetchEvent) {
     const monitorOperational
     = checkResponse.status === (monitor.expectStatus || 200)
     const monitorStatusChanged
-    = kvData.monitorHistoryData?.[monitor.id]?.lastCheck.operational
+    = kvData.monitorHistoryData?.[monitor.id]?.lastCheck.operational !== monitorOperational
     !== monitorOperational
 
     const notifications = getNotifications(monitor, monitorOperational, () => {
