@@ -14,7 +14,7 @@ export default function Page() {
         <img src='/logo.svg' className='size-10' />
         <h1 className='text-3xl font-bold'>{config.settings.title}</h1>
       </div>
-      <div>{JSON.stringify(data, null, 2)}</div>
+      <div className='whitespace-pre'>{JSON.stringify(data, null, 2)}</div>
     </div>
   )
 }
