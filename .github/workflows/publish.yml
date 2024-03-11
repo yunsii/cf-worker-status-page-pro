@@ -48,3 +48,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: deploy --env production
+          secrets: |
+            SECRET_DISCORD_WEBHOOK_URL
+        env:
+          SECRET_DISCORD_WEBHOOK_URL: ${{ secrets.SECRET_DISCORD_WEBHOOK_URL }}
