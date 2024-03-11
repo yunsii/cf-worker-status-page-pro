@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { getCheckLocation } from '../_helpers/location'
 import { getStore, prepareMonitors, upsertKvStore } from '../_helpers/store'
-import { getNotifications } from '../_helpers/notifications'
+import { getNotificationCount, getNotifications } from '../_helpers/notifications'
 
 import { Subrequests } from './Subrequests'
 
@@ -30,8 +30,7 @@ export async function handleCronTrigger(event: FetchEvent) {
   console.debug('uncheckMonitors:', uncheckMonitors)
 
   for (const monitor of uncheckMonitors) {
-    // For count only
-    const notificationCount = getNotifications(monitor, false).length
+    const notificationCount = getNotificationCount()
     const restSubrequestCount = (config.settings.subrequestsLimit || defaultSubrequestsLimit) - subrequests.total
     const monitorMaxRequiredSubrequestCount = 1 + notificationCount
 

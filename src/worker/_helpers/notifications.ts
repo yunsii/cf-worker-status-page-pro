@@ -122,6 +122,14 @@ export async function notifyDiscord(monitor: Monitor, operational: boolean, opti
   })
 }
 
+export function getNotificationCount() {
+  return [
+    typeof SECRET_SLACK_WEBHOOK_URL === 'undefined',
+    typeof SECRET_TELEGRAM_CHAT_ID === 'undefined' || typeof SECRET_TELEGRAM_API_TOKEN === 'undefined',
+    typeof SECRET_DISCORD_WEBHOOK_URL === 'undefined',
+  ].filter((item) => !item).length
+}
+
 export function getNotifications(monitor: Monitor, monitorOperational: boolean, afterFetch?: () => void) {
   return [
     async () => {
