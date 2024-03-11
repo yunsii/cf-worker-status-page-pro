@@ -48,11 +48,11 @@ export interface MonitorHistoryDataChecksItem {
 
 export interface DataV1 {
   /** Key: monitor id */
-  monitorHistoryData?: Record<string, {
+  monitorHistoryData?: Partial<Record<string, {
     checks: MonitorHistoryDataChecksItem[]
     firstCheck: string
     lastCheck: MonitorLastCheck
-  }>
+  }>>
   lastUpdate?: DataV1LastCheck
 }
 

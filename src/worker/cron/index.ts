@@ -55,7 +55,7 @@ export async function handleCronTrigger(event: FetchEvent) {
     const monitorOperational
     = checkResponse.status === (monitor.expectStatus || 200)
     const monitorStatusChanged
-    = kvData.monitorHistoryData?.[monitor.id].lastCheck.operational
+    = kvData.monitorHistoryData?.[monitor.id]?.lastCheck.operational
     !== monitorOperational
 
     const notifications = getNotifications(monitor, monitorOperational, () => {
@@ -78,7 +78,7 @@ export async function handleCronTrigger(event: FetchEvent) {
       operational: monitorOperational,
     }
 
-    const targetMonitorHistoryDataChecksItem = kvData.monitorHistoryData?.[monitor.id].checks.find((item) => {
+    const targetMonitorHistoryDataChecksItem = kvData.monitorHistoryData?.[monitor.id]?.checks.find((item) => {
       return item.date === checkDay
     })
 
@@ -117,8 +117,8 @@ export async function handleCronTrigger(event: FetchEvent) {
     }
 
     kvData.monitorHistoryData[monitor.id] = {
-      checks: [...kvData.monitorHistoryData[monitor.id].checks, monitorHistoryDataChecksItem],
-      firstCheck: kvData.monitorHistoryData[monitor.id].firstCheck || checkDay,
+      checks: [...kvData.monitorHistoryData[monitor.id]?.checks || [], monitorHistoryDataChecksItem],
+      firstCheck: kvData.monitorHistoryData[monitor.id]?.firstCheck || checkDay,
       lastCheck: monitorLastCheck,
     }
   }
