@@ -81,10 +81,11 @@ export async function handleCronTrigger(event: FetchEvent) {
       return item.date === checkDay
     })
 
-    const monitorHistoryDataChecksItem: MonitorHistoryDataChecksItem = {
+    const monitorHistoryDataChecksItem: MonitorHistoryDataChecksItem = targetMonitorHistoryDataChecksItem || {
       date: checkDay,
-      fails: (targetMonitorHistoryDataChecksItem?.fails || 0) + (monitorOperational ? 0 : 1),
+      fails: 0,
     }
+    monitorHistoryDataChecksItem.fails = (monitorHistoryDataChecksItem.fails || 0) + (monitorOperational ? 0 : 1)
 
     if (config.settings.collectResponseTimes && monitorOperational) {
       if (!monitorHistoryDataChecksItem.stats) {
@@ -101,9 +102,8 @@ export async function handleCronTrigger(event: FetchEvent) {
           totalMs: 0,
         }
       }
-      const target = targetMonitorHistoryDataChecksItem || monitorHistoryDataChecksItem
-      const count = target.stats![checkLocation].count + 1
-      const totalMs = target.stats![checkLocation].totalMs + requestTime
+      const count = monitorHistoryDataChecksItem.stats[checkLocation]!.count + 1
+      const totalMs = monitorHistoryDataChecksItem.stats[checkLocation]!.totalMs + requestTime
 
       monitorHistoryDataChecksItem.stats[checkLocation] = {
         count,
@@ -116,7 +116,9 @@ export async function handleCronTrigger(event: FetchEvent) {
     }
 
     kvData.monitorHistoryData[monitor.id] = {
-      checks: [...kvData.monitorHistoryData[monitor.id]?.checks || [], monitorHistoryDataChecksItem],
+      checks: [...(kvData.monitorHistoryData[monitor.id]?.checks || []).filter((item) => {
+        return item.date !== monitorHistoryDataChecksItem.date
+      }), monitorHistoryDataChecksItem],
       firstCheck: kvData.monitorHistoryData[monitor.id]?.firstCheck || checkDay,
       lastCheck: monitorLastCheck,
     }

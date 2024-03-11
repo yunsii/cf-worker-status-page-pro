@@ -38,12 +38,12 @@ export interface MonitorHistoryDataChecksItem {
    *
    * Key: location, No value if config.settings.collectResponseTimes=false
    */
-  stats?: Record<string, {
+  stats?: Partial<Record<string, {
     count: number
     totalMs: number
     // totalMs / count
     // avgMs: number
-  }>
+  }>>
 }
 
 export interface DataV1 {
