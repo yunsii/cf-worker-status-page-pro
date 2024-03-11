@@ -6,10 +6,6 @@ import { createServer } from 'vite'
 import fetch from 'node-fetch'
 import compression from 'compression'
 
-import { getRequest, setResponse } from './request-transform'
-
-import { handleApi } from '#src/worker/api/root'
-
 const PORT = 3000
 
 async function startServer() {
@@ -25,13 +21,6 @@ async function startServer() {
     })
   ).middlewares
   app.use(viteDevMiddleware)
-
-  // TODO: support api HMR or hot reload
-  app.route('/api/*').all(async (req, res, next) => {
-    const nodeRequest = await getRequest(`http://localhost:${PORT}`, req)
-    const nodeResponse = await handleApi(nodeRequest)
-    await setResponse(res, nodeResponse)
-  })
 
   app.get('*', async (req, res, next) => {
     const userAgent = req.headers['user-agent'] || null

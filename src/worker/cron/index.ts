@@ -1,23 +1,44 @@
 /* eslint-disable no-console */
 import { getCheckLocation } from '../_helpers/location'
 import { getStore, prepareMonitors, upsertKvStore } from '../_helpers/store'
+import { getNotifications } from '../_helpers/notifications'
+
+import { Subrequests } from './Subrequests'
 
 import type { MonitorHistoryDataChecksItem, MonitorLastCheck } from '../_helpers/store'
 
 import { config } from '#src/config'
+
+const defaultSubrequestsLimit = 50
 
 function getDate() {
   return new Date().toISOString().split('T')[0]
 }
 
 export async function handleCronTrigger(event: FetchEvent) {
+  const subrequests = new Subrequests()
+  const checkedIds: string[] = []
+  let allOperational = true
+
   const checkLocation = await getCheckLocation()
+  subrequests.required()
   const checkDay = getDate()
   const { kvData } = await getStore()
+  subrequests.required()
 
   const { uncheckMonitors } = await prepareMonitors()
 
   for (const monitor of uncheckMonitors) {
+    // For count only
+    const notificationCount = getNotifications(monitor, false).length
+    const restSubrequestCount = (config.settings.subrequestsLimit || defaultSubrequestsLimit) - subrequests.total
+    const monitorMaxRequiredSubrequestCount = 1 + notificationCount
+
+    // Including a kv write subrequest
+    if (restSubrequestCount < monitorMaxRequiredSubrequestCount + 1) {
+      break
+    }
+
     console.log(`Checking ${monitor.name} ...`)
 
     const requestStartTime = Date.now()
@@ -36,6 +57,20 @@ export async function handleCronTrigger(event: FetchEvent) {
     const monitorStatusChanged
     = kvData.monitorHistoryData?.[monitor.id].lastCheck.operational
     !== monitorOperational
+
+    const notifications = getNotifications(monitor, monitorOperational, () => {
+      subrequests.notified()
+    })
+
+    if (monitorStatusChanged) {
+      event.waitUntil(Promise.allSettled(notifications))
+    }
+
+    subrequests.checked()
+    checkedIds.push(monitor.id)
+    if (!monitorOperational) {
+      allOperational = false
+    }
 
     const monitorLastCheck: MonitorLastCheck = {
       status: checkResponse.status,
@@ -91,12 +126,15 @@ export async function handleCronTrigger(event: FetchEvent) {
   kvData.lastUpdate = {
     time: Date.now(),
     location: checkLocation,
-    requests: 0,
-    checks: {
-      ids: [],
-      allOperational: false,
+    subrequests: {
+      total: subrequests.total,
+      required: subrequests.requiredCount,
+      notified: subrequests.notifiedCount,
     },
-    notifies: 0,
+    checks: {
+      ids: checkedIds,
+      allOperational,
+    },
   }
 
   await upsertKvStore(kvData)

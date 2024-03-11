@@ -5,13 +5,8 @@ import { isWorkerEnv } from '#src/worker/_helpers'
 
 export async function data(pageContext: PageContext) {
   try {
-    const id = pageContext.routeParams?.id
     const store = await getStore()
-
-    return {
-      id,
-      ...store,
-    }
+    return store.kvData
   }
   catch (err) {
     if (isWorkerEnv) {
@@ -19,10 +14,8 @@ export async function data(pageContext: PageContext) {
     }
     // eslint-disable-next-line no-console
     console.debug('Error ignored in non worker env.')
-    return {
-      kvData: null,
-    }
+    return null
   }
 }
 
-export type AboutPageData = Awaited<ReturnType<typeof data>>
+export type IndexPageData = Awaited<ReturnType<typeof data>>

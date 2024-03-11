@@ -16,14 +16,18 @@ export interface DataV1LastCheck {
   time: number
   location: string
   /** Requests has been initiated, subrequest including required/check/notify request */
-  requests: number
+  subrequests: {
+    total: number
+    /** Monitor notified subrequests has been initiated */
+    notified: number
+    /** Monitor required subrequests has been initiated */
+    required: number
+  }
   /** Monitor check subrequests has been initiated, store with monitor id */
   checks: {
     ids: string[]
     allOperational: boolean
   }
-  /** Monitor notify subrequests has been initiated */
-  notifies: number
 }
 
 export interface MonitorHistoryDataChecksItem {
