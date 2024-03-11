@@ -24,5 +24,10 @@ export const config: Config = {
       url: 'https://blog.cloudflare.com',
       name: 'The Cloudflare Blog',
     },
+    {
+      id: 'google',
+      url: 'https://www.google.com/',
+      name: 'Google',
+    },
   ],
 }
