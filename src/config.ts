@@ -33,5 +33,9 @@ export const config: Config = {
       id: 'bilibili',
       url: 'https://www.bilibili.com/',
     },
+    {
+      id: 'GitHub',
+      url: 'https://github.com/',
+    },
   ],
 }
