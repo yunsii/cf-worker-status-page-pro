@@ -39,7 +39,7 @@ export async function handleCronTrigger(event: FetchEvent) {
       break
     }
 
-    console.log(`Checking ${monitor.name} ...`)
+    console.log(`Checking ${monitor.name || monitor.id} ...`)
 
     const requestStartTime = Date.now()
     const checkResponse = await fetch(monitor.url, {
