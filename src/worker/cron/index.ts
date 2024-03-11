@@ -27,6 +27,7 @@ export async function handleCronTrigger(event: FetchEvent) {
   subrequests.required()
 
   const { uncheckMonitors } = await prepareMonitors()
+  console.debug('uncheckMonitors:', uncheckMonitors)
 
   for (const monitor of uncheckMonitors) {
     // For count only
