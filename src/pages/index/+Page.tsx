@@ -1,21 +1,20 @@
 import React from 'react'
 
-import { Counter } from '#src/components/Counter'
+import type { IndexPageData } from './+data'
+
+import { usePageContext } from '#src/renderer/usePageContext'
+import { config } from '#src/config'
 
 export default function Page() {
+  const { data } = usePageContext<IndexPageData>()
+
   return (
-    <>
-      <h1 className='text-3xl font-bold'>Welcome</h1>
-      <img src='/logo.svg' className='size-4' />
-      This page is:
-      <ul>
-        <li>Rendered to HTML.</li>
-        <li>
-          Interactive.
-          {' '}
-          <Counter />
-        </li>
-      </ul>
-    </>
+    <div className='p-2'>
+      <div className='flex items-center gap-2'>
+        <img src='/logo.svg' className='size-10' />
+        <h1 className='text-3xl font-bold'>{config.settings.title}</h1>
+      </div>
+      <div>{JSON.stringify(data, null, 2)}</div>
+    </div>
   )
 }

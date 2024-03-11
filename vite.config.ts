@@ -3,7 +3,6 @@ import path from 'node:path'
 import react from '@vitejs/plugin-react'
 import vike from 'vike/plugin'
 import polishTaggedTemplates from 'unplugin-polish-tagged-templates/vite'
-import yaml from '@modyfi/vite-plugin-yaml'
 
 import type { UserConfig } from 'vite'
 
@@ -14,7 +13,6 @@ export default {
     polishTaggedTemplates({
       cssTags: ['cls'],
     }),
-    yaml(),
   ],
   resolve: {
     // Only needed for this example

@@ -25,7 +25,7 @@ const config: UserConfig = {
       ],
     ],
   },
-  // ref: https://commitlint.js.org/#/reference-prompt
+  // ref: https://commitlint.js.org/#src/reference-prompt
   prompt: {
     questions: {
       type: {
