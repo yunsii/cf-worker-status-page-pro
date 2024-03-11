@@ -54,15 +54,14 @@ export async function handleCronTrigger(event: FetchEvent) {
     // Determine whether operational and status changed
     const monitorOperational
     = checkResponse.status === (monitor.expectStatus || 200)
-    const monitorStatusChanged
-    = kvData.monitorHistoryData?.[monitor.id]?.lastCheck.operational !== monitorOperational
-    !== monitorOperational
+    const monitorStatusChanged = kvData.monitorHistoryData?.[monitor.id]?.lastCheck.operational !== monitorOperational
 
     const notifications = getNotifications(monitor, monitorOperational, () => {
       subrequests.notified()
     })
 
     if (monitorStatusChanged) {
+      console.log('monitorStatusChanged to', monitorOperational)
       event.waitUntil(Promise.allSettled(notifications))
     }
 

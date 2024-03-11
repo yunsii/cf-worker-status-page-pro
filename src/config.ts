@@ -29,5 +29,9 @@ export const config: Config = {
       url: 'https://www.google.com/',
       name: 'Google',
     },
+    {
+      id: 'bilibili',
+      url: 'https://www.bilibili.com/',
+    },
   ],
 }
