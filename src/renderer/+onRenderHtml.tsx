@@ -12,9 +12,11 @@ export const onRenderHtml: OnRenderHtmlAsync = async (pageContext) => {
   const { Page, pageProps } = pageContext
 
   const page = (
-    <PageLayout pageContext={pageContext}>
-      <Page {...pageProps} />
-    </PageLayout>
+    <React.StrictMode>
+      <PageLayout pageContext={pageContext}>
+        <Page {...pageProps} />
+      </PageLayout>
+    </React.StrictMode>
   )
 
   // Streaming is optional and we can use renderToString() instead

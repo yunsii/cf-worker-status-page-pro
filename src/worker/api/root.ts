@@ -1,6 +1,6 @@
-import { ApiManager } from '../helpers'
+import { ApiManager } from '../_helpers'
 
-import { defineStoreApi } from './store'
+import { defineStoreApi } from '../store'
 
 export async function handleApi(request: Request) {
   try {

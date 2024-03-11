@@ -1,7 +1,7 @@
 import type { PageContext } from 'vike/types'
 
-import { getStore } from '#src/worker/api/store/helpers'
-import { isWorkerEnv } from '#src/worker/helpers'
+import { getStore } from '#src/worker/_helpers/store'
+import { isWorkerEnv } from '#src/worker/_helpers'
 
 export async function data(pageContext: PageContext) {
   try {

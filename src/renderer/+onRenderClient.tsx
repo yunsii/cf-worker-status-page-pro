@@ -10,8 +10,10 @@ export async function onRenderClient(pageContext: PageContext) {
   const { Page, pageProps } = pageContext
   hydrateRoot(
     document.getElementById('page-view')!,
-    <PageLayout pageContext={pageContext}>
-      <Page {...pageProps} />
-    </PageLayout>,
+    <React.StrictMode>
+      <PageLayout pageContext={pageContext}>
+        <Page {...pageProps} />
+      </PageLayout>
+    </React.StrictMode>,
   )
 }
