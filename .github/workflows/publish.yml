@@ -46,8 +46,9 @@ jobs:
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
+          packageManager: pnpm
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: deploy --env production
+          environment: production
           secrets: |
             SECRET_DISCORD_WEBHOOK_URL
         env:
