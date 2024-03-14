@@ -28,6 +28,7 @@ export const config: Config = {
       id: 'google',
       url: 'https://www.google.com/',
       name: 'Google',
+      followRedirect: true,
     },
     {
       id: 'bilibili',
