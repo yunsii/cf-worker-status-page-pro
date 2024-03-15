@@ -160,5 +160,5 @@ export function getNotifications(monitor: Monitor, monitorOperational: boolean, 
       })
       afterFetch?.()
     },
-  ].map((item) => item())
+  ]
 }

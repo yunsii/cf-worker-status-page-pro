@@ -56,12 +56,11 @@ export async function handleCronTrigger(event: FetchEvent) {
     = checkResponse.status === (monitor.expectStatus || 200)
     const monitorStatusChanged = kvData.monitorHistoryData?.[monitor.id]?.lastCheck.operational !== monitorOperational
 
-    const notifications = getNotifications(monitor, monitorOperational, () => {
-      subrequests.notified()
-    })
-
     if (monitorStatusChanged) {
-      event.waitUntil(Promise.allSettled(notifications))
+      const notifications = getNotifications(monitor, monitorOperational, () => {
+        subrequests.notified()
+      })
+      event.waitUntil(Promise.allSettled(notifications.map((item) => item())))
     }
 
     subrequests.checked()

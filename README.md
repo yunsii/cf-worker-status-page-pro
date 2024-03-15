@@ -1,3 +1,5 @@
+[![](https://dcbadge.vercel.app/api/server/6H8SesN3)](https://discord.gg/6H8SesN3)
+
 [Cloudflare Workers](https://workers.cloudflare.com/) with:
 
 - Vite
