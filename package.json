@@ -68,6 +68,6 @@
     "zx": "^7.2.3"
   },
   "lint-staged": {
-    "*": "eslint"
+    "*": "eslint --fix"
   }
 }
