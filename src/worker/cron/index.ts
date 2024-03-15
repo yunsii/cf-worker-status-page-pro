@@ -61,7 +61,6 @@ export async function handleCronTrigger(event: FetchEvent) {
     })
 
     if (monitorStatusChanged) {
-      console.log('monitorStatusChanged to', monitorOperational)
       event.waitUntil(Promise.allSettled(notifications))
     }
 

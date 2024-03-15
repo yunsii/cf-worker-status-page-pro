@@ -3,7 +3,7 @@ import type { Config } from './types'
 export const config: Config = {
   settings: {
     title: 'Status Page',
-    url: 'https://status-page.eidam.dev',
+    url: 'https://cf-worker-status-page-pro-production.yunsii.workers.dev',
     daysInHistogram: 90,
     collectResponseTimes: true,
   },

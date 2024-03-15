@@ -51,7 +51,7 @@ export async function notifySlack(monitor: Monitor, operational: boolean, option
       },
     ],
   }
-  return fetch(webhook, {
+  return await fetch(webhook, {
     body: JSON.stringify(payload),
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -84,7 +84,7 @@ export async function notifyTelegram(monitor: Monitor, operational: boolean, opt
   payload.append('text', text)
 
   const telegramUrl = `https://api.telegram.org/bot${apiToken}/sendMessage`
-  return fetch(telegramUrl, {
+  return await fetch(telegramUrl, {
     body: payload,
     method: 'POST',
   })
@@ -115,7 +115,7 @@ export async function notifyDiscord(monitor: Monitor, operational: boolean, opti
       },
     ],
   }
-  return fetch(webhook, {
+  return await fetch(webhook, {
     body: JSON.stringify(payload),
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -160,5 +160,5 @@ export function getNotifications(monitor: Monitor, monitorOperational: boolean, 
       })
       afterFetch?.()
     },
-  ]
+  ].map((item) => item())
 }
