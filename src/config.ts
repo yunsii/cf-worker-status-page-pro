@@ -4,7 +4,7 @@ export const config: Config = {
   settings: {
     title: 'Status Page',
     url: 'https://cf-worker-status-page-pro-production.yunsii.workers.dev',
-    daysInHistogram: 90,
+    displayDays: 90,
     collectResponseTimes: true,
   },
   monitors: [

@@ -2,6 +2,7 @@
 import { getCheckLocation } from '../_helpers/location'
 import { getStore, prepareMonitors, upsertKvStore } from '../_helpers/store'
 import { getNotificationCount, getNotifications } from '../_helpers/notifications'
+import { getDate } from '../_helpers/datetime'
 
 import { Subrequests } from './Subrequests'
 
@@ -10,10 +11,6 @@ import type { MonitorHistoryDataChecksItem, MonitorLastCheck } from '../_helpers
 import { config } from '#src/config'
 
 const defaultSubrequestsLimit = 50
-
-function getDate() {
-  return new Date().toISOString().split('T')[0]
-}
 
 export async function handleCronTrigger(event: FetchEvent) {
   const subrequests = new Subrequests()

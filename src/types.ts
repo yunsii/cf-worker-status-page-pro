@@ -23,10 +23,10 @@ export interface Settings {
   /** Status page url, used for notification */
   url: string
   /**
-   * Number of days you want to display in histogram,
+   * Number of days you want to display in page,
    * outdated data will be removed.
    */
-  daysInHistogram: number
+  displayDays: number
   /** Collects avg response times from CRON locations */
   collectResponseTimes: boolean
   /** Ref: https://developers.cloudflare.com/workers/platform/limits default=50 */

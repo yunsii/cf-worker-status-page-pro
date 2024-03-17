@@ -229,3 +229,10 @@ export const locations = {
 }
 
 export const UNKNOWN_LOCATION = 'UNKNOWN_LOCATION'
+
+export function parseLocation(keyCode: string) {
+  if (keyCode in locations) {
+    return locations[keyCode as keyof typeof locations]
+  }
+  return keyCode || UNKNOWN_LOCATION
+}
