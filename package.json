@@ -1,4 +1,5 @@
 {
+  "name": "cf-worker-status-page-pro",
   "type": "module",
   "packageManager": "pnpm@8.15.4",
   "scripts": {
