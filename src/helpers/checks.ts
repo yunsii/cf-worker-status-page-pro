@@ -39,6 +39,9 @@ export function getChecksItemRenderStatus(monitorAllData: MonitorAllData, date: 
   if (monitorAllData.lastCheck.operational === false) {
     status = 'latest-incident'
   }
+  else {
+    status = checksItemStatus
+  }
 
-  return checksItemStatus as RenderStatus
+  return status
 }
