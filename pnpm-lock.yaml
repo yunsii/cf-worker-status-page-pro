@@ -35,9 +35,6 @@ dependencies:
   react-streaming:
     specifier: ^0.3.9
     version: 0.3.19(react-dom@18.2.0)(react@18.2.0)
-  react-tooltip:
-    specifier: ^5.26.3
-    version: 5.26.3(react-dom@18.2.0)(react@18.2.0)
   scheduler:
     specifier: ^0.23.0
     version: 0.23.0
@@ -2629,10 +2626,6 @@ packages:
     resolution: {integrity: sha512-TdHqgGf9odd8SXNuxtUBVx8Nv+qZOejE6qyqiy5NtbYYQOeFa6zmHkxlPzmaLxWWHsU6nJmB7AETdVPi+2NBUg==}
     engines: {node: '>=8'}
     dev: true
-
-  /classnames@2.5.1:
-    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
-    dev: false
 
   /clean-regexp@1.0.0:
     resolution: {integrity: sha512-GfisEZEJvzKrmGWkvfhgzcz/BllN1USeqD2V6tg14OAOgaCD2Z/PUEuxnAZ/nPvmaHRG7a8y77p1T/IRQ4D1Hw==}
@@ -6110,18 +6103,6 @@ packages:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.8
       isbot-fast: 1.2.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /react-tooltip@5.26.3(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-MpYAws8CEHUd/RC4GaDCdoceph/T4KHM5vS5Dbk8FOmLMvvIht2ymP2htWdrke7K6lqPO8rz8+bnwWUIXeDlzg==}
-    peerDependencies:
-      react: '>=16.14.0'
-      react-dom: '>=16.14.0'
-    dependencies:
-      '@floating-ui/dom': 1.6.3
-      classnames: 2.5.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
