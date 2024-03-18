@@ -64,7 +64,13 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                   let color = cls`bg-gray-400`
                   const targetCheckData = targetData.checks.find((item) => item.date === dateItem)
                   if (targetCheckData) {
-                    color = targetCheckData.fails === 0 ? cls`bg-green-500` : cls`bg-red-500`
+                    if (targetCheckData.fails === 0) {
+                      color = cls`bg-green-500`
+                    }
+                    else {
+                      const hasOperational = 'hasOperational' in targetCheckData ? targetCheckData.hasOperational : true
+                      color = hasOperational ? cls`bg-orange-500` : cls`bg-red-500`
+                    }
                   }
 
                   const itemWidth = `calc(100% / ${displayDays})`

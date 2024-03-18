@@ -79,8 +79,12 @@ export async function handleCronTrigger(event: FetchEvent) {
     const monitorHistoryDataChecksItem: MonitorHistoryDataChecksItem = targetMonitorHistoryDataChecksItem || {
       date: checkDay,
       fails: 0,
+      hasOperational: false,
     }
     monitorHistoryDataChecksItem.fails = (monitorHistoryDataChecksItem.fails || 0) + (monitorOperational ? 0 : 1)
+    monitorHistoryDataChecksItem.hasOperational = !monitorHistoryDataChecksItem.hasOperational && monitorOperational
+      ? true
+      : monitorHistoryDataChecksItem.hasOperational
 
     if (config.settings.collectResponseTimes && monitorOperational) {
       if (!monitorHistoryDataChecksItem.stats) {

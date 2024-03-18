@@ -34,6 +34,12 @@ export interface MonitorHistoryDataChecksItem {
   date: string
   fails: number
   /**
+   * Whether has operational status in a day.
+   *
+   * If no `hasOperational` data key, fallback to `true` for legacy data.
+   */
+  hasOperational?: boolean
+  /**
    * Stats for operational monitor
    *
    * Key: location, No value if config.settings.collectResponseTimes=false
