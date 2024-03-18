@@ -27,7 +27,7 @@ export function getTargetDateChecksItem(monitorAllData: MonitorAllData, date: st
   return monitorAllData.checks.find((item) => item.date === date)
 }
 
-export type RenderStatus = null | 'all-good' | 'all-incidents' | 'latest-incident' | 'has-incident'
+export type RenderStatus = Status | 'latest-incident'
 
 export function getChecksItemRenderStatus(monitorAllData: MonitorAllData, date: string) {
   let status: RenderStatus = null
