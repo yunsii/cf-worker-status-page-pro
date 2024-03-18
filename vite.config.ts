@@ -15,9 +15,6 @@ export default {
     }),
   ],
   resolve: {
-    // Only needed for this example
-    // TODO: check if still needed
-    preserveSymlinks: true,
     alias: {
       '#src': path.resolve(__dirname, 'src'),
     },
