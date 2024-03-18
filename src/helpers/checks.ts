@@ -1,5 +1,7 @@
 import type { MonitorAllData, MonitorDailyChecksItem } from '#src/worker/_helpers/store'
 
+import { getDate } from '#src/worker/_helpers/datetime'
+
 export type Status = null | 'all-good' | 'all-incidents' | 'has-incident'
 
 export function getChecksItemStatus(checksItem?: MonitorDailyChecksItem) {
@@ -36,7 +38,7 @@ export function getChecksItemRenderStatus(monitorAllData: MonitorAllData, date: 
 
   const checksItemStatus = getChecksItemStatus(targetDateChecksItem)
 
-  if (monitorAllData.lastCheck.operational === false) {
+  if (monitorAllData.lastCheck.operational === false && date === getDate()) {
     status = 'latest-incident'
   }
   else {
