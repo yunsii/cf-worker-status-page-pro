@@ -30,35 +30,31 @@ export interface DataV1LastCheck {
   }
 }
 
-export interface MonitorHistoryDataChecksItem {
+export interface MonitorDailyChecksItem {
   date: string
   fails: number
-  /**
-   * Whether has operational status in a day.
-   *
-   * If no `hasOperational` data key, fallback to `true` for legacy data.
-   */
-  hasOperational?: boolean
   /**
    * Stats for operational monitor
    *
    * Key: location, No value if config.settings.collectResponseTimes=false
    */
-  stats?: Partial<Record<string, {
+  stats: Record<string, {
     count: number
     totalMs: number
     // totalMs / count
     // avgMs: number
-  }>>
+  }>
+}
+
+export interface MonitorAllData {
+  checks: MonitorDailyChecksItem[]
+  firstCheck: string
+  lastCheck: MonitorLastCheck
 }
 
 export interface DataV1 {
   /** Key: monitor id */
-  monitorHistoryData?: Record<string, {
-    checks: MonitorHistoryDataChecksItem[]
-    firstCheck: string
-    lastCheck: MonitorLastCheck
-  }>
+  monitorHistoryData?: Record<string, MonitorAllData>
   lastUpdate?: DataV1LastCheck
 }
 

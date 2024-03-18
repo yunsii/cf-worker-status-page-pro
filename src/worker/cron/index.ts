@@ -6,7 +6,7 @@ import { getDate } from '../_helpers/datetime'
 
 import { Subrequests } from './Subrequests'
 
-import type { MonitorHistoryDataChecksItem, MonitorLastCheck } from '../_helpers/store'
+import type { MonitorDailyChecksItem, MonitorLastCheck } from '../_helpers/store'
 
 import { config } from '#src/config'
 
@@ -76,18 +76,15 @@ export async function handleCronTrigger(event: FetchEvent) {
       return item.date === checkDay
     })
 
-    const monitorHistoryDataChecksItem: MonitorHistoryDataChecksItem = targetMonitorHistoryDataChecksItem || {
+    const monitorHistoryDataChecksItem: MonitorDailyChecksItem = targetMonitorHistoryDataChecksItem || {
       date: checkDay,
       fails: 0,
-      hasOperational: false,
+      stats: {},
     }
     monitorHistoryDataChecksItem.fails = (monitorHistoryDataChecksItem.fails || 0) + (monitorOperational ? 0 : 1)
-    monitorHistoryDataChecksItem.hasOperational = !monitorHistoryDataChecksItem.hasOperational && monitorOperational
-      ? true
-      : monitorHistoryDataChecksItem.hasOperational
 
     if (config.settings.collectResponseTimes && monitorOperational) {
-      if (!monitorHistoryDataChecksItem.stats) {
+      if (Object.keys(monitorHistoryDataChecksItem.stats).length === 0) {
         monitorHistoryDataChecksItem.stats = {
           [checkLocation]: {
             count: 0,

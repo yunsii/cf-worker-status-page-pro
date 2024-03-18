@@ -50,5 +50,6 @@
     "modyfi",
     "mrkdwn"
   ],
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "tailwindCSS.experimental.classRegex": ["cls`([^`]*)", "tw`([^`]*)"]
 }
