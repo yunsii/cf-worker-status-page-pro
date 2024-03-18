@@ -1,4 +1,4 @@
-export function getDate(date?: Date) {
+export function getDate(date?: Date | null) {
   return (date ?? new Date()).toISOString().split('T')[0]
 }
 

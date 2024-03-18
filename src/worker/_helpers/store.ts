@@ -6,6 +6,7 @@ export const WORKER_SUBREQUESTS_LIMIT = 50
 export const DATA_KEY = 'data-v1'
 
 export interface MonitorLastCheck {
+  time?: number
   operational: boolean
   status: number
   statusText: string

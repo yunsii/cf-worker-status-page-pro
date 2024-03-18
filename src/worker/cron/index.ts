@@ -70,6 +70,7 @@ export async function handleCronTrigger(event: FetchEvent) {
       status: checkResponse.status,
       statusText: checkResponse.statusText,
       operational: monitorOperational,
+      time: Date.now(),
     }
 
     const targetMonitorHistoryDataChecksItem = kvData.monitorHistoryData?.[monitor.id]?.checks.find((item) => {
