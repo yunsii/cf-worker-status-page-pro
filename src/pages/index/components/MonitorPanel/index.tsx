@@ -61,7 +61,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                 {getHistoryDates(displayDays).map((dateItem) => {
                   const targetData = data.monitorHistoryData![item]
 
-                  let color = cls`bg-gray-400`
+                  let color = cls`bg-gray-300`
                   const targetCheckData = targetData.checks.find((item) => item.date === dateItem)
                   if (targetCheckData) {
                     if (targetCheckData.fails === 0) {
@@ -69,7 +69,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                     }
                     else {
                       const hasOperational = 'hasOperational' in targetCheckData ? targetCheckData.hasOperational : true
-                      color = hasOperational ? cls`bg-orange-500` : cls`bg-red-500`
+                      color = hasOperational ? cls`bg-yellow-500` : cls`bg-red-500`
                     }
                   }
 
