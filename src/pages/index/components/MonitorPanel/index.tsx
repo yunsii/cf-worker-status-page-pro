@@ -36,7 +36,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
           {allOperational ? 'All Systems Operational' : 'Not All Systems Operational'}
         </div>
         {!!data.lastUpdate && (
-          <div className='text-xs font-light'>
+          <div className='text-xs font-light' title={new Date(data.lastUpdate.time).toLocaleString()}>
             checked
             {' '}
             {Math.round((Date.now() - data.lastUpdate.time) / 1000)}
@@ -72,7 +72,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
 
           const lastCheckInfo = [{
             key: 'Last Check Time',
-            value: monitorData.lastCheck.time ? new Date(monitorData.lastCheck.time).toLocaleDateString() : null,
+            value: monitorData.lastCheck.time ? new Date(monitorData.lastCheck.time).toLocaleString() : null,
           }, {
             key: 'Last Check Operational',
             value: monitorData.lastCheck.operational.toString(),
