@@ -1,4 +1,3 @@
-import React from 'react'
 import { cls } from 'tagged-classnames-free'
 
 import type { DataV1 } from '#src/worker/_helpers/store'
@@ -11,10 +10,11 @@ import { getChecksItemRenderStatus, getTargetDateChecksItem } from '#src/helpers
 
 export interface IMonitorPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   data?: DataV1 | null
+  search?: string
 }
 
 const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
-  const { data, ...restDivProps } = props
+  const { data, search, ...restDivProps } = props
 
   if (!data || !data.monitorHistoryData || Object.keys(data).length === 0) {
     return <div>No Data</div>
@@ -53,24 +53,60 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
         mt-4 flex flex-col gap-y-2
       `}
       >
-        {monitorIds.map((item) => {
+        {monitorIds.filter((item) => {
           const monitorData = data.monitorHistoryData![item]
           const monitorConfig = config.monitors.find((monitorItem) => monitorItem.id === item)
+          const targetMonitor = config.monitors.find((monitorItem) => monitorItem.id === item)
+          const title = targetMonitor?.name || item
+          const keyword = search?.trim().toLowerCase()
+          if (!keyword) {
+            return true
+          }
+
+          const searchFields = [title, targetMonitor?.id, targetMonitor?.description]
+
+          return searchFields.filter(Boolean).some((item) => item!.includes(keyword))
+        }).map((item) => {
+          const monitorData = data.monitorHistoryData![item]
+          const monitorConfig = config.monitors.find((monitorItem) => monitorItem.id === item)
+          const targetMonitor = config.monitors.find((monitorItem) => monitorItem.id === item)
+          const title = targetMonitor?.name || item
+
           const info = [
-            { key: 'Description', value: monitorConfig?.description },
+            ...(monitorConfig
+              ? [
+                  { key: 'Description', value: monitorConfig?.description },
+                  {
+                    key: 'Method',
+                    value: (monitorConfig.method || 'GET').toUpperCase(),
+                  },
+                  {
+                    key: 'URL',
+                    value: monitorConfig.url,
+                  },
+                  {
+                    key: 'Expect Status',
+                    value: monitorConfig.expectStatus || 200,
+                  },
+                  {
+                    key: 'Follow Redirect',
+                    value: monitorConfig.followRedirect || false,
+                  },
+                ]
+              : []),
             { key: 'First Check', value: monitorData.firstCheck },
           ].filter((item) => !!item.value)
 
           return (
-            <li key={item}>
-              <div className='flex items-center'>
-                <h2>
-                  {config.monitors.find((monitorItem) => monitorItem.id === item)?.name || item}
+            <li key={item} className={cls`[&:not(:last-child)]:mb-2`}>
+              <div className='mb-1 flex items-center gap-2'>
+                <h2 className='text-slate-950'>
+                  {title}
                 </h2>
                 {!!info.length && (
                   <Tooltip>
-                    <TooltipTrigger className={cls`size-6`}>
-                      ❔
+                    <TooltipTrigger className={cls` size-5 text-slate-500`}>
+                      <span className={cls`i-ic--outline-info size-full`} />
                     </TooltipTrigger>
                     <TooltipContent
                       as='ul'
@@ -82,7 +118,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                       {info.map((item) => {
                         return (
                           <li key={item.key}>
-                            <span className={cls`after:content-[':_']`}>
+                            <span className={cls`font-semibold after:content-[':_']`}>
                               {item.key}
                             </span>
                             <span>
@@ -93,6 +129,19 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                       })}
                     </TooltipContent>
                   </Tooltip>
+                )}
+                {monitorConfig
+                && (!monitorConfig.method || monitorConfig.method.toUpperCase() === 'GET')
+                && (
+                  <a
+                    className='i-ic--outline-open-in-new size-5 text-slate-500 hover:text-slate-400'
+                    href={monitorConfig.url}
+                    target='_blank'
+                    rel='noreferrer'
+                    title='Open in new tab'
+                  >
+                    <span className='sr-only'>{title}</span>
+                  </a>
                 )}
               </div>
               <ul className='flex gap-1'>
@@ -142,7 +191,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                       >
                         <span
                           className={cls`
-                            rounded
+                            rounded transition-all hover:opacity-70
                             ${color} block
                           `}
                           style={{
@@ -155,8 +204,8 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                         shadow-lg backdrop-blur-lg
                       `}
                       >
-                        <div>{dateItem}</div>
-                        {statusStr && <div className={cls`${textColor} font-bold`}>{statusStr}</div>}
+                        <div className='font-semibold'>{dateItem}</div>
+                        {statusStr && <div className={cls`${textColor} font-semibold`}>{statusStr}</div>}
                         <div />
                         {targetDateChecksItem
                           ? Object.keys(targetDateChecksItem.stats).map((item) => {
@@ -167,7 +216,9 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                                   {parseLocation(item)}
                                 </span>
                                 <span>
-                                  {(stat.totalMs / stat.count).toFixed(0)}
+                                  <span className='font-semibold'>
+                                    {(stat.totalMs / stat.count).toFixed(0)}
+                                  </span>
                                   ms
                                 </span>
                               </div>

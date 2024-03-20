@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { PageContextProvider } from './usePageContext'
 
 import type { PageContext } from 'vike/types'

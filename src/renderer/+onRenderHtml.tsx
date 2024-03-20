@@ -25,6 +25,7 @@ export const onRenderHtml: OnRenderHtmlAsync = async (pageContext) => {
   return escapeInject`
     <!DOCTYPE html>
     <html>
+      <title>Status Page</title>
       <head>
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
       </head>
