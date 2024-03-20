@@ -54,8 +54,6 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
       `}
       >
         {monitorIds.filter((item) => {
-          const monitorData = data.monitorHistoryData![item]
-          const monitorConfig = config.monitors.find((monitorItem) => monitorItem.id === item)
           const targetMonitor = config.monitors.find((monitorItem) => monitorItem.id === item)
           const title = targetMonitor?.name || item
           const keyword = search?.trim().toLowerCase()
@@ -71,6 +69,17 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
           const monitorConfig = config.monitors.find((monitorItem) => monitorItem.id === item)
           const targetMonitor = config.monitors.find((monitorItem) => monitorItem.id === item)
           const title = targetMonitor?.name || item
+
+          const lastCheckInfo = [{
+            key: 'Last Check Time',
+            value: monitorData.lastCheck.time ? new Date(monitorData.lastCheck.time).toLocaleDateString() : null,
+          }, {
+            key: 'Last Check Operational',
+            value: monitorData.lastCheck.operational.toString(),
+          }, {
+            key: 'Last Check Status',
+            value: `${monitorData.lastCheck.status} / ${monitorData.lastCheck.statusText}`,
+          }]
 
           const info = [
             ...(monitorConfig
@@ -90,12 +99,16 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                   },
                   {
                     key: 'Follow Redirect',
-                    value: monitorConfig.followRedirect || false,
+                    value: (monitorConfig.followRedirect || false).toString(),
                   },
                 ]
               : []),
             { key: 'First Check', value: monitorData.firstCheck },
-          ].filter((item) => !!item.value)
+            ...lastCheckInfo,
+          ].filter((item) => !(typeof item.value === 'undefined' || item.value === null)) as {
+            key: string
+            value: string | number
+          }[]
 
           return (
             <li key={item} className={cls`[&:not(:last-child)]:mb-2`}>
