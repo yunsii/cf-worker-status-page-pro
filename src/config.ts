@@ -2,7 +2,7 @@ import type { Config } from './types'
 
 export const config: Config = {
   settings: {
-    title: 'Status Page',
+    title: 'Status Page Pro',
     url: 'https://cf-worker-status-page-pro-production.yunsii.workers.dev',
     displayDays: 90,
     collectResponseTimes: true,

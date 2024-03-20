@@ -1,49 +1,107 @@
+# Cloudflare Worker - Status Page Pro
+
 [![](https://dcbadge.vercel.app/api/server/6H8SesN3)](https://discord.gg/6H8SesN3)
 
-[Cloudflare Workers](https://workers.cloudflare.com/) with:
+Monitor your websites, showcase status including daily history, and get Slack notification whenever your website status changes. Using **Cloudflare Workers**, **CRON Triggers,** and **KV storage**. Check [my status page](https://cf-worker-status-page-pro-production.yunsii.workers.dev/) out! 🚀
 
-- Vite
-- Vike
-- React
-- [`react-streaming`](https://github.com/brillout/react-streaming)
-- Universal `fetch()`
+## Features
 
-## Docs
+- 🦄 Written in TypeScript
+- 🚀 No max monitors limit, even with workers KV free tier
+- 💎 More DX/UX detail you want
 
-See [vike.dev/cloudflare-workers](https://vike.dev/cloudflare-workers).
+## Pre-requisites
 
-## Run
+You'll need a [Cloudflare Workers account](https://dash.cloudflare.com/sign-up/workers) with
 
-```bash
-git clone git@github.com:vikejs/vike
-cd vike/examples/cloudflare-workers-react-full/
-npm install
+- A workers domain set up
+- The Workers Bundled subscription \($5/mo\)
+  - [It works with Workers Free!](https://blog.cloudflare.com/workers-kv-free-tier/) Check [more info](#workers-kv-free-tier) on how to run on Workers Free.
+- Some websites/APIs to watch 🙂
+
+Also, prepare the following secrets
+
+- Cloudflare API token with `Edit Cloudflare Workers` permissions
+- Slack incoming webhook \(optional\)
+- Discord incoming webhook \(optional\)
+
+## Getting started
+
+You can use GitHub Actions to deploy on your own.
+
+1. Click the button and follow the instructions, you should end up with a clone of this repository
+2. Navigate to your new **GitHub repository &gt; Settings &gt; Secrets and variables &gt; Actions** and add the following secrets:
+
+   ```yaml
+   - Name: CLOUDFLARE_API_TOKEN
+
+   - Name: SECRET_SLACK_WEBHOOK_URL (optional)
+   - Value: your-slack-webhook-url
+
+   - Name: SECRET_DISCORD_WEBHOOK_URL (optional)
+   - Value: your-discord-webhook-url
+   ```
+
+3. Edit [config.ts](./src/config.ts) to adjust configuration and list all of your websites/APIs you want to monitor
+
+4. Push to `master` branch to trigger the deployment
+5. 🎉
+6. _\(optional\)_ Go to [Cloudflare Workers settings](https://dash.cloudflare.com/?to=/workers) and assign custom domain/route
+7. _\(optional\)_ Edit [wrangler.toml](./wrangler.toml) to adjust Worker settings or CRON Trigger schedule, especially if you are on [Workers Free plan](#workers-kv-free-tier)
+
+## Workers KV free tier
+
+The Workers Free plan includes limited KV usage, but the quota is sufficient for 2-minute checks only
+
+- Change the CRON trigger to 2 minutes interval (`crons = ["*/2 * * * *"]`) in [wrangler.toml](./wrangler.toml)
+
+## Known issues
+
+- **KV replication lag** - You might get Slack notification instantly, however it may take couple of more seconds to see the change on your status page as [Cron Triggers are usually running on underutilized quiet hours machines](https://blog.cloudflare.com/introducing-cron-triggers-for-cloudflare-workers/#how-are-you-able-to-offer-this-feature-at-no-additional-cost).
+
+- **Initial delay (no data)** - It takes couple of minutes to schedule and run CRON Triggers for the first time
+
+## Running project locally
+
+**Requirements**
+
+- Pnpm (`npm i -g pnpm`)
+
+### Steps to get server up and running
+
+**Install dependencies**
+
+```
+pnpm i
 ```
 
-Develop:
+**Login With Wrangler to Cloudflare**
 
-> For increased development speed, we use an Express.js development server instead of a worker.
-
-```bash
-npm run dev
+```
+npx wrangler login
 ```
 
-Preview the worker locally:
+**Create your KV namespace in cloudflare**
 
-> You'll need to login/create a Cloudflare account.
-
-```bash
-npm run preview
+```
+On the workers page navigate to KV, and create a namespace
 ```
 
-Deploy the worker to Cloudflare:
+**Update your wrangler.toml with**
 
-```bash
-npm run deploy
+```
+kv-namespaces = [{binding="KV_STORE", id="<KV_ID>", preview_id="<KV_ID>"}]
 ```
 
-## Universal `fetch()`
+_Note: you may need to change `kv-namespaces` to `kv_namespaces`_
 
-Note how we define a fetch function at `pageContext.fetch` that is universal: it works for development as well as for the production worker.
+**Run**
 
-The trick is to provide a different `fetch()` implementation at [worker/ssr.ts](worker/ssr.ts) and [dev-server/index.js](dev-server/index.js).
+```
+pnpm run dev
+```
+
+## Credits
+
+- [eidam/cf-workers-status-page](https://github.com/eidam/cf-workers-status-page)
+- [Vike](https://vike.dev/)
