@@ -1,6 +1,7 @@
 export interface Config {
   settings: Settings
   monitors: Monitor[]
+  monitorsCsvUrl?: string
 }
 
 export interface Monitor {

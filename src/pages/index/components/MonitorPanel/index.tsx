@@ -1,6 +1,7 @@
 import { cls } from 'tagged-classnames-free'
 
 import type { DataV1 } from '#src/worker/_helpers/store'
+import type { Monitor } from '#src/types'
 
 import { config } from '#src/config'
 import { getHistoryDates } from '#src/worker/_helpers/datetime'
@@ -9,15 +10,23 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '#src/components/Tooltip
 import { getChecksItemRenderStatus, getTargetDateChecksItem } from '#src/helpers/checks'
 
 export interface IMonitorPanelProps extends React.HTMLAttributes<HTMLDivElement> {
+  allMonitors: Monitor[]
   data?: DataV1 | null
   search?: string
 }
 
 const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
-  const { data, search, ...restDivProps } = props
+  const { allMonitors, data, search, ...restDivProps } = props
 
   if (!data || !data.monitorHistoryData || Object.keys(data).length === 0) {
-    return <div>No Data</div>
+    return (
+      <div>
+        No Data (
+        {allMonitors.length}
+        {' '}
+        monitor(s))
+      </div>
+    )
   }
 
   const monitorIds = (Object.keys(data.monitorHistoryData) || [])
@@ -36,7 +45,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
           {allOperational ? 'All Systems Operational' : 'Not All Systems Operational'}
         </div>
         {!!data.lastUpdate && (
-          <div className='text-xs font-light' title={new Date(data.lastUpdate.time).toLocaleString()}>
+          <div className='text-xs font-light' suppressHydrationWarning title={new Date(data.lastUpdate.time).toLocaleString()}>
             checked
             {' '}
             {Math.round((Date.now() - data.lastUpdate.time) / 1000)}
@@ -54,7 +63,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
       `}
       >
         {monitorIds.filter((item) => {
-          const targetMonitor = config.monitors.find((monitorItem) => monitorItem.id === item)
+          const targetMonitor = allMonitors.find((monitorItem) => monitorItem.id === item)
           const title = targetMonitor?.name || item
           const keyword = search?.trim().toLowerCase()
           if (!keyword) {
@@ -66,8 +75,8 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
           return searchFields.filter(Boolean).some((item) => item!.includes(keyword))
         }).map((item) => {
           const monitorData = data.monitorHistoryData![item]
-          const monitorConfig = config.monitors.find((monitorItem) => monitorItem.id === item)
-          const targetMonitor = config.monitors.find((monitorItem) => monitorItem.id === item)
+          const monitorConfig = allMonitors.find((monitorItem) => monitorItem.id === item)
+          const targetMonitor = allMonitors.find((monitorItem) => monitorItem.id === item)
           const title = targetMonitor?.name || item
 
           const lastCheckInfo = [{

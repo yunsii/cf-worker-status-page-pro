@@ -7,6 +7,7 @@ Monitor your websites, showcase status including daily history, and get Slack no
 ## Features
 
 - 🦄 Written in TypeScript
+- ✨ Support remote csv monitors
 - 🚀 No max monitors limit, even with workers KV free tier
 - 💎 More DX/UX detail you want
 

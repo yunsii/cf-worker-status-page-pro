@@ -8,7 +8,7 @@ import { usePageContext } from '#src/renderer/usePageContext'
 import { config } from '#src/config'
 
 export default function Page() {
-  const { data } = usePageContext<IndexPageData>()
+  const { data: { allMonitors, kvData } } = usePageContext<IndexPageData>()
   const inputRef = useRef<HTMLInputElement>(null)
   const [inputFocused, setInputFocused] = useState(false)
   const [searchValue, setSearchValue] = useState('')
@@ -67,7 +67,8 @@ export default function Page() {
       </header>
       <main>
         <MonitorPanel
-          data={data}
+          allMonitors={allMonitors}
+          data={kvData}
           className={cls`mt-4`}
           search={searchValue}
         />

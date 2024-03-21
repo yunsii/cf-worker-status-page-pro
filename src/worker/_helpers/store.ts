@@ -1,4 +1,5 @@
 import { config } from '#src/config'
+import getRemoteMonitors from '#src/helpers/monitors'
 import { ensureWorkerEnv } from '#src/worker/_helpers'
 
 export const WORKER_SUBREQUESTS_LIMIT = 50
@@ -76,19 +77,35 @@ export async function getStore() {
   return { kvData }
 }
 
+export async function getAllMonitors(useRemoteMonitors = true) {
+  if (useRemoteMonitors) {
+    const remoteMonitors = await getRemoteMonitors()
+    return [...config.monitors, ...remoteMonitors]
+  }
+  return config.monitors
+}
+
+export async function getCoreData(useRemoteMonitors?: boolean) {
+  const [allMonitors, { kvData }] = await Promise.all([getAllMonitors(useRemoteMonitors), getStore()])
+  return {
+    allMonitors,
+    kvData,
+  }
+}
+
 export async function prepareMonitors() {
-  const { kvData } = await getStore()
+  const { allMonitors, kvData } = await getCoreData()
 
   const lastCheckedMonitorIds = kvData.lastUpdate?.checks.ids || []
   const uncheckMonitors = lastCheckedMonitorIds.length === 0
-    ? config.monitors
-    : config.monitors.filter((item) => {
+    ? allMonitors
+    : allMonitors.filter((item) => {
       return !lastCheckedMonitorIds.includes(item.id)
     })
 
   if (uncheckMonitors.length === 0) {
     return {
-      uncheckMonitors: config.monitors,
+      uncheckMonitors: allMonitors,
       lastCheckedMonitorIds: [],
     }
   }
