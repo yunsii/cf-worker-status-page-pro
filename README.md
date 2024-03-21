@@ -31,7 +31,7 @@ Also, prepare the following secrets
 You can use GitHub Actions to deploy on your own.
 
 1. Click the button and follow the instructions, you should end up with a clone of this repository
-2. Navigate to your new **GitHub repository &gt; Settings &gt; Secrets and variables &gt; Actions** and add the following secrets:
+2. Navigate to your new **GitHub repository > Settings > Secrets and variables > Actions** and add the following secrets:
 
    ```yaml
    - Name: CLOUDFLARE_API_TOKEN
@@ -101,6 +101,10 @@ _Note: you may need to change `kv-namespaces` to `kv_namespaces`_
 ```
 pnpm run dev
 ```
+
+## Remote CSV Monitors
+
+You can use remote CSV monitors like [this template](https://docs.google.com/spreadsheets/d/1eNhgeS0ElQGFeaVLNJwFWI8JW-Ppv158necdqASJ6TY/edit?usp=sharing). You can get the URL by **File > Share > Publish to web** and select specific sheet and Comma-separated values (.csv).
 
 ## Credits
 
