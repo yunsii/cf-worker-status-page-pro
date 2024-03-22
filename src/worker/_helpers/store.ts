@@ -76,6 +76,8 @@ export async function upsertKvStore(value: DataV1 | null, allMonitors: Monitor[]
 
 export async function cleanDataV1(value: DataV1, allMonitors: Monitor[]) {
   const { bytes } = memorySizeOf(JSON.stringify(value))
+  // eslint-disable-next-line no-console
+  console.debug('value bytes', bytes)
 
   // https://developers.cloudflare.com/kv/platform/limits/
   // Value max size 25 MiB, in case of exceptions, we clean data when bytes bigger than 24 MiB.
@@ -98,13 +100,16 @@ export async function cleanDataV1(value: DataV1, allMonitors: Monitor[]) {
       return allMonitors.some((monitorItem) => monitorItem.id === item)
     }).reduce<Record<string, MonitorAllData>>((previous, current) => {
       const { checks, ...restHistoryData } = monitorHistoryData[current]
-      return { ...previous, current: {
-        ...restHistoryData,
-        // Remove dates older than config.settings.displayDays
-        checks: checks.filter((item) => {
-          return historyDates.includes(item.date)
-        }),
-      } }
+      return {
+        ...previous,
+        [current]: {
+          ...restHistoryData,
+          // Remove dates older than config.settings.displayDays
+          checks: checks.filter((item) => {
+            return historyDates.includes(item.date)
+          }),
+        },
+      }
     }, {})),
   }
 }
