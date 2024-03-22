@@ -61,6 +61,9 @@ devDependencies:
   '@iconify-json/ic':
     specifier: ^1.1.17
     version: 1.1.17
+  '@iconify-json/svg-spinners':
+    specifier: ^1.1.2
+    version: 1.1.2
   '@jannajs/lint':
     specifier: 3.0.0-next.4
     version: 3.0.0-next.4(@antfu/eslint-config@2.8.0)(@commitlint/cli@18.6.1)(@commitlint/config-conventional@18.6.2)(@commitlint/types@18.6.1)(eslint-plugin-format@0.1.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react-refresh@0.4.5)(eslint-plugin-react@7.34.0)(eslint-ts-patch@8.56.0-0)(eslint-ts-patch@8.57.0-0)(husky@8.0.3)(lint-staged@15.2.2)
@@ -1288,6 +1291,12 @@ packages:
 
   /@iconify-json/ic@1.1.17:
     resolution: {integrity: sha512-EvAjZzVESmN36zlyefylePUNaU2BQ3eRKVZ6KQSQ2bG01ppoZaiFZRri74VTyvp5Mlv2yn68ux1fgCoT+etGmA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/svg-spinners@1.1.2:
+    resolution: {integrity: sha512-Aab6SqkORaTJ1W+ooufn6C8BsBitrn3uk8iRQLPA6pjhyvQAhkKCGMctyXIL5ZjrycnoFVsZ4mx7KnwEMra8qg==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

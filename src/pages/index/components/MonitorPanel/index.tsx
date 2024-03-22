@@ -20,7 +20,12 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
 
   if (!data || !data.monitorHistoryData || Object.keys(data).length === 0) {
     return (
-      <div>
+      <div className={cls`
+        mt-4 flex min-h-40 items-center justify-center
+        rounded bg-gradient-to-r from-purple-500 to-pink-500 text-white
+      `}
+      >
+        <span className='i-svg-spinners--ring-resize mr-1 size-5' />
         No Data (
         {allMonitors.length}
         {' '}
