@@ -14,7 +14,7 @@ export async function data(pageContext: PageContext) {
     const { lastUpdate, monitorHistoryData } = kvData
 
     if (!monitorHistoryData) {
-      return kvData
+      return { allMonitors, kvData }
     }
 
     return {
