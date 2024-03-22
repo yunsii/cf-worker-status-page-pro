@@ -68,10 +68,14 @@ export interface DataV1 {
 
 export async function upsertKvStore(value: DataV1 | null, allMonitors: Monitor[]) {
   ensureWorkerEnv()
-  const result = await (value === null
-    ? KV_STORE.delete(DATA_KEY)
-    : KV_STORE.put(DATA_KEY, JSON.stringify(cleanDataV1(value, allMonitors))))
-  return result
+  if (value === null) {
+    await KV_STORE.delete(DATA_KEY)
+    return
+  }
+  const cleanedValue = cleanDataV1(value, allMonitors)
+  // eslint-disable-next-line no-console
+  console.log('🚀 ~ file: store.ts:76 ~ upsertKvStore ~ cleanedValue:', cleanedValue)
+  await KV_STORE.put(DATA_KEY, JSON.stringify(cleanedValue))
 }
 
 export async function cleanDataV1(value: DataV1, allMonitors: Monitor[]) {
