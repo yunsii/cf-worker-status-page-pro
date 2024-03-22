@@ -21,7 +21,6 @@ export async function handleCronTrigger(event: FetchEvent) {
   subrequests.required()
   const checkDay = getDate()
   const { kvData } = await getStore()
-  console.log('🚀 ~ file: index.ts:24 ~ handleCronTrigger ~ kvData:', kvData)
   subrequests.required()
 
   const { uncheckMonitors, lastCheckedMonitorIds, allMonitors } = await prepareMonitors()

@@ -72,16 +72,12 @@ export async function upsertKvStore(value: DataV1 | null, allMonitors: Monitor[]
     await KV_STORE.delete(DATA_KEY)
     return
   }
-  const cleanedValue = cleanDataV1(value, allMonitors)
-  // eslint-disable-next-line no-console
-  console.log('🚀 ~ file: store.ts:76 ~ upsertKvStore ~ cleanedValue:', cleanedValue)
+  const cleanedValue = await cleanDataV1(value, allMonitors)
   await KV_STORE.put(DATA_KEY, JSON.stringify(cleanedValue))
 }
 
 export async function cleanDataV1(value: DataV1, allMonitors: Monitor[]) {
   const { bytes } = memorySizeOf(JSON.stringify(value))
-  // eslint-disable-next-line no-console
-  console.debug('value bytes', bytes)
 
   // https://developers.cloudflare.com/kv/platform/limits/
   // Value max size 25 MiB, in case of exceptions, we clean data when bytes bigger than 24 MiB.
