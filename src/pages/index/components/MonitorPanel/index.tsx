@@ -1,4 +1,5 @@
 import { cls } from 'tagged-classnames-free'
+import React from 'react'
 
 import type { DataV1 } from '#src/worker/_helpers/store'
 import type { Monitor } from '#src/types'
@@ -173,7 +174,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
 
                   let color = cls`bg-gray-300`
                   let textColor = cls`text-gray-300`
-                  let statusStr: string | null = null
+                  let statusStr: React.ReactNode = null
 
                   switch (renderStatus) {
                     case 'all-good':
@@ -189,7 +190,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                     case 'latest-incident':
                       color = cls`bg-red-500`
                       textColor = cls`text-red-500`
-                      statusStr = `Latest incident`
+                      statusStr = `${targetDateChecksItem!.fails} incident(s)`
                       break
                     case 'has-incident':
                       color = cls`bg-yellow-500`
