@@ -11,7 +11,12 @@ export async function data(pageContext: PageContext) {
 
   try {
     const { allMonitors, kvData } = await getCoreData(useRemoteMonitors)
-    const { lastUpdate, monitorHistoryData = {} } = kvData
+    const { lastUpdate, monitorHistoryData } = kvData
+
+    if (!monitorHistoryData) {
+      return kvData
+    }
+
     return {
       allMonitors,
       kvData: {
