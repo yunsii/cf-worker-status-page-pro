@@ -1,4 +1,9 @@
+import { getHistoryDates } from './datetime'
+
+import type { Monitor } from '#src/types'
+
 import { config } from '#src/config'
+import { aMiB, memorySizeOf } from '#src/helpers/memory'
 import getRemoteMonitors from '#src/helpers/monitors'
 import { ensureWorkerEnv } from '#src/worker/_helpers'
 
@@ -61,10 +66,42 @@ export interface DataV1 {
   lastUpdate?: DataV1LastCheck
 }
 
-export async function upsertKvStore(value: DataV1 | null) {
+export async function upsertKvStore(value: DataV1 | null, allMonitors: Monitor[]) {
   ensureWorkerEnv()
-  const result = await (value === null ? KV_STORE.delete(DATA_KEY) : KV_STORE.put(DATA_KEY, JSON.stringify(value)))
+  const result = await (value === null
+    ? KV_STORE.delete(DATA_KEY)
+    : KV_STORE.put(DATA_KEY, JSON.stringify(cleanDataV1(value, allMonitors))))
   return result
+}
+
+export async function cleanDataV1(value: DataV1, allMonitors: Monitor[]) {
+  const { bytes } = memorySizeOf(JSON.stringify(value))
+
+  // https://developers.cloudflare.com/kv/platform/limits/
+  // Value max size 25 MiB, in case of exceptions, we clean data when bytes bigger than 24 MiB.
+  if (bytes < 24 * aMiB) {
+    return value
+  }
+
+  const { monitorHistoryData = {}, ...rest } = value
+  const historyDates = getHistoryDates()
+
+  return {
+    ...rest,
+    ...(Object.keys(monitorHistoryData).filter((item) => {
+      // Remove monitor data from state if missing in monitors config
+      return allMonitors.some((monitorItem) => monitorItem.id === item)
+    }).reduce<Record<string, MonitorAllData>>((previous, current) => {
+      const { checks, ...restHistoryData } = monitorHistoryData[current]
+      return { ...previous, current: {
+        ...restHistoryData,
+        // Remove dates older than config.settings.displayDays
+        checks: checks.filter((item) => {
+          return historyDates.includes(item.date)
+        }),
+      } }
+    }, {})),
+  }
 }
 
 export async function getStore() {
@@ -107,11 +144,13 @@ export async function prepareMonitors() {
     return {
       uncheckMonitors: allMonitors,
       lastCheckedMonitorIds: [],
+      allMonitors,
     }
   }
 
   return {
     uncheckMonitors,
     lastCheckedMonitorIds,
+    allMonitors,
   }
 }

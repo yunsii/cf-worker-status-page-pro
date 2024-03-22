@@ -4,8 +4,7 @@ import React from 'react'
 import type { DataV1 } from '#src/worker/_helpers/store'
 import type { Monitor } from '#src/types'
 
-import { config } from '#src/config'
-import { getHistoryDates } from '#src/worker/_helpers/datetime'
+import { getDisplayDays, getHistoryDates } from '#src/worker/_helpers/datetime'
 import { parseLocation } from '#src/helpers/locations'
 import { Tooltip, TooltipContent, TooltipTrigger } from '#src/components/Tooltip'
 import { getChecksItemRenderStatus, getTargetDateChecksItem } from '#src/helpers/checks'
@@ -31,7 +30,6 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
   }
 
   const monitorIds = (Object.keys(data.monitorHistoryData) || [])
-  const displayDays = config.settings.displayDays || 90
   const allOperational = data.lastUpdate?.checks.allOperational
 
   const titleCls = allOperational ? cls`border-green-500 bg-green-300 text-green-800` : cls`border-red-500 bg-red-300 text-red-800`
@@ -168,7 +166,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                 )}
               </div>
               <ul className='flex gap-1'>
-                {getHistoryDates(displayDays).map((dateItem) => {
+                {getHistoryDates().map((dateItem) => {
                   const targetDateChecksItem = getTargetDateChecksItem(monitorData, dateItem)
                   const renderStatus = getChecksItemRenderStatus(monitorData, dateItem)
 
@@ -201,7 +199,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                       break
                   }
 
-                  const itemWidth = `calc(100% / ${displayDays})`
+                  const itemWidth = `calc(100% / ${getDisplayDays()})`
 
                   return (
                     <Tooltip key={dateItem}>

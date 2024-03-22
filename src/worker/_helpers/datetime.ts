@@ -1,8 +1,12 @@
+import { config } from '#src/config'
+
+export const getDisplayDays = () => config.settings.displayDays || 90
+
 export function getDate(date?: Date | null) {
   return (date ?? new Date()).toISOString().split('T')[0]
 }
 
-export function getHistoryDates(days: number) {
+export function getHistoryDates(days = getDisplayDays()) {
   const date = new Date()
   date.setDate(date.getDate() - days)
 

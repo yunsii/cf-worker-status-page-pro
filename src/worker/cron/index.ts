@@ -23,7 +23,7 @@ export async function handleCronTrigger(event: FetchEvent) {
   const { kvData } = await getStore()
   subrequests.required()
 
-  const { uncheckMonitors, lastCheckedMonitorIds } = await prepareMonitors()
+  const { uncheckMonitors, lastCheckedMonitorIds, allMonitors } = await prepareMonitors()
   console.debug('uncheckMonitors:', uncheckMonitors)
 
   for (const monitor of uncheckMonitors) {
@@ -139,6 +139,6 @@ export async function handleCronTrigger(event: FetchEvent) {
     },
   }
 
-  await upsertKvStore(kvData)
+  await upsertKvStore(kvData, allMonitors)
   return new Response('OK')
 }
