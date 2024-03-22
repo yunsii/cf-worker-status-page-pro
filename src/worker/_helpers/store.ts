@@ -83,7 +83,12 @@ export async function cleanDataV1(value: DataV1, allMonitors: Monitor[]) {
     return value
   }
 
-  const { monitorHistoryData = {}, ...rest } = value
+  const { monitorHistoryData, ...rest } = value
+
+  if (!monitorHistoryData) {
+    return value
+  }
+
   const historyDates = getHistoryDates()
 
   return {
