@@ -7,7 +7,7 @@ Monitor your websites, showcase status including daily history, and get Slack no
 ## Features
 
 - 🦄 Written in TypeScript
-- ✨ Support remote csv monitors
+- ✨ Support [remote csv monitors](#remote-csv-monitors)
 - 🚀 No limit for max monitors of cron task, even with workers KV free tier
 - 🪁 [Auto GC](./src/worker/_helpers/store.ts#L77) for KV value size
 - 💎 More DX/UX detail you want
