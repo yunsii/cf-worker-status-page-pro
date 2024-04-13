@@ -1,6 +1,6 @@
 # Cloudflare Worker - Status Page Pro
 
-[![](https://dcbadge.vercel.app/api/server/h2tKCshs)](https://discord.gg/h2tKCshs)
+[![](https://dcbadge.vercel.app/api/server/gE39mt6WXd)](https://discord.gg/gE39mt6WXd)
 
 Monitor your websites, showcase status including daily history, and get Slack notification whenever your website status changes. Using **Cloudflare Workers**, **CRON Triggers,** and **KV storage**. Check [my status page](https://cf-worker-status-page-pro-production.yunsii.workers.dev/) out! 🚀
 
