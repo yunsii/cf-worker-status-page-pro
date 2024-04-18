@@ -31,7 +31,7 @@ Also, prepare the following secrets
 
 You can use GitHub Actions to deploy on your own.
 
-1. Click the button and follow the instructions, you should end up with a clone of this repository
+1. You should use this template to create a new repository
 2. Navigate to your new **GitHub repository > Settings > Secrets and variables > Actions** and add the following secrets:
 
    ```yaml
