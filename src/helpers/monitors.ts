@@ -3,10 +3,9 @@ import Papa from 'papaparse'
 import type { Monitor } from '#src/types'
 
 import { config } from '#src/config'
-import { isWorkerEnv } from '#src/worker/_helpers'
 
 export default async function getRemoteMonitors() {
-  if (!config.monitorsCsvUrl || !isWorkerEnv) {
+  if (!config.monitorsCsvUrl) {
     return []
   }
   const response = await fetch(config.monitorsCsvUrl, {
