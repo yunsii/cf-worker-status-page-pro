@@ -49,6 +49,7 @@ export async function data(pageContext: PageContext) {
     return {
       allMonitors,
       kvData: getDevKvData(),
+      filter: new URLSearchParams(urlParsed.search).get('filter')?.trim(),
     }
   }
 }

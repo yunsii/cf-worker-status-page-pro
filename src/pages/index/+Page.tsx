@@ -8,10 +8,10 @@ import { usePageContext } from '#src/renderer/usePageContext'
 import { config } from '#src/config'
 
 export default function Page() {
-  const { data: { allMonitors, kvData } } = usePageContext<IndexPageData>()
+  const { data: { allMonitors, kvData, filter } } = usePageContext<IndexPageData>()
   const inputRef = useRef<HTMLInputElement>(null)
   const [inputFocused, setInputFocused] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState(filter || '')
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -28,6 +28,18 @@ export default function Page() {
       window.removeEventListener('keyup', handler)
     }
   }, [inputFocused])
+
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    if (searchValue.trim()) {
+      url.searchParams.set('filter', searchValue)
+      history.replaceState(null, '', url)
+    }
+    else {
+      url.searchParams.delete('filter')
+      history.replaceState(null, '', url)
+    }
+  }, [searchValue])
 
   return (
     <div className='container max-w-screen-xl pt-4'>
