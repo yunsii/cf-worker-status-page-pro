@@ -1,6 +1,8 @@
 import { cls } from 'tagged-classnames-free'
 import React from 'react'
 
+import Empty from './Empty'
+
 import type { DataV1 } from '#src/worker/_helpers/store'
 import type { Monitor } from '#src/types'
 
@@ -18,19 +20,23 @@ export interface IMonitorPanelProps extends React.HTMLAttributes<HTMLDivElement>
 const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
   const { allMonitors, data, search, ...restDivProps } = props
 
+  if (allMonitors.length === 0) {
+    return (
+      <Empty>
+        No monitors
+      </Empty>
+    )
+  }
+
   if (!data || !data.monitorHistoryData || Object.keys(data).length === 0) {
     return (
-      <div className={cls`
-        mt-4 flex min-h-40 items-center justify-center
-        rounded bg-gradient-to-r from-purple-500 to-pink-500 text-white
-      `}
-      >
+      <Empty>
         <span className='i-svg-spinners--ring-resize mr-1 size-5' />
         No Data (
         {allMonitors.length}
         {' '}
         monitor(s))
-      </div>
+      </Empty>
     )
   }
 
