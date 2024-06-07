@@ -114,7 +114,7 @@ export async function cleanDataV1(value: DataV1, allMonitors: Monitor[]) {
   }
 }
 
-export async function getStore() {
+async function getStore() {
   ensureWorkerEnv()
   // https://developers.cloudflare.com/kv/api/read-key-value-pairs/
   let kvData = await KV_STORE.get<DataV1>(DATA_KEY, 'json')
@@ -140,7 +140,7 @@ export async function getCoreData(useRemoteMonitors?: boolean) {
   }
 }
 
-export async function prepareMonitors() {
+export async function prepareData() {
   const { allMonitors, kvData } = await getCoreData()
 
   const lastCheckedMonitorIds = kvData.lastUpdate?.checks.ids || []
@@ -152,15 +152,17 @@ export async function prepareMonitors() {
 
   if (uncheckMonitors.length === 0) {
     return {
+      kvData,
+      allMonitors,
       uncheckMonitors: allMonitors,
       lastCheckedMonitorIds: [],
-      allMonitors,
     }
   }
 
   return {
+    kvData,
+    allMonitors,
     uncheckMonitors,
     lastCheckedMonitorIds,
-    allMonitors,
   }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { getCheckLocation } from '../_helpers/location'
-import { getStore, prepareMonitors, upsertKvStore } from '../_helpers/store'
+import { prepareData, upsertKvStore } from '../_helpers/store'
 import { getNotificationCount, getNotifications } from '../_helpers/notifications'
 import { getDate } from '../_helpers/datetime'
 
@@ -20,10 +20,9 @@ export async function handleCronTrigger(event: FetchEvent) {
   const checkLocation = await getCheckLocation()
   subrequests.required()
   const checkDay = getDate()
-  const { kvData } = await getStore()
-  subrequests.required()
 
-  const { uncheckMonitors, lastCheckedMonitorIds, allMonitors } = await prepareMonitors()
+  const { kvData, allMonitors, uncheckMonitors, lastCheckedMonitorIds } = await prepareData()
+  subrequests.required(2)
   console.debug('uncheckMonitors:', uncheckMonitors)
 
   for (const monitor of uncheckMonitors) {

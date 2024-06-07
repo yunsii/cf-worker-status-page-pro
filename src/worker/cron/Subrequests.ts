@@ -3,9 +3,9 @@ export class Subrequests {
   notifiedCount = 0
   requiredCount = 0
 
-  required() {
-    this.requiredCount += 1
-    this.total += 1
+  required(count = 1) {
+    this.requiredCount += count
+    this.total += count
   }
 
   checked() {
