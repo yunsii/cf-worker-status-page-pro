@@ -85,7 +85,7 @@ export default function Page() {
           search={searchValue}
         />
       </main>
-      <footer className='mt-4 flex justify-between'>
+      <footer className='my-4 flex justify-between'>
         <span>
           Powered by
           {' '}
