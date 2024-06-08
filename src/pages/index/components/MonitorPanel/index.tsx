@@ -46,10 +46,17 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
   const titleCls = allOperational ? cls`border-green-500 bg-green-300 text-green-800` : cls`border-red-500 bg-red-300 text-red-800`
   return (
     <div {...restDivProps}>
-      <div className={cls`
-        flex items-center justify-between rounded border px-4 py-2 text-lg font-bold shadow-md
-        ${titleCls}
-      `}
+      <div
+        className={cls`
+          flex items-center justify-between rounded border px-4 py-2 text-lg font-bold shadow-md
+          ${titleCls}
+        `}
+        onDoubleClick={() => {
+          // eslint-disable-next-line no-console
+          console.log('allMonitors', allMonitors)
+          // eslint-disable-next-line no-console
+          console.log('data', data)
+        }}
       >
         <div>
           {allOperational ? 'All Systems Operational' : 'Not All Systems Operational'}
