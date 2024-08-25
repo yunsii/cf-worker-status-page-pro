@@ -35,8 +35,7 @@ async function startServer() {
 
     if (!httpResponse) {
       return next()
-    }
-    else {
+    } else {
       const { statusCode, headers } = httpResponse
       headers.forEach(([name, value]) => res.setHeader(name, value))
       res.status(statusCode)

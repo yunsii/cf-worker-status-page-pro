@@ -1,6 +1,7 @@
 {
-  // Enable the ESlint flat config support
-  "eslint.experimental.useFlatConfig": true,
+  "eslint.options": {
+    "flags": ["unstable_ts_config"]
+  },
 
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,
@@ -43,7 +44,8 @@
     "css",
     "less",
     "scss",
-    "sass"
+    "sass",
+    "svg"
   ],
   "cSpell.words": [
     "brillout",

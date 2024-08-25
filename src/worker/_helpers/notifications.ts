@@ -78,15 +78,10 @@ export async function notifyTelegram(monitor: Monitor, options: INotifyTelegramO
 
   const text = [
     `
-      Monitor *${monitorName.replaceAll(
-      '-',
-      '\\-',
-    )}* changed status to *${getOperationalLabel(data.operational)}* [${data.status}|${data.statusText}]
+      Monitor *${monitorName.replaceAll('-', '\\-')}* changed status to *${getOperationalLabel(data.operational)}* [${data.status}|${data.statusText}]
     `.trim(),
     `
-      ${data.operational ? '✅' : '❌'} \`${monitor.method ? monitor.method : 'GET'} ${
-      monitor.url
-    }\` \\- 👀 [Status Page](${config.settings.url})
+      ${data.operational ? '✅' : '❌'} \`${monitor.method ? monitor.method : 'GET'} ${monitor.url}\` \\- 👀 [Status Page](${config.settings.url})
     `.trim(),
   ].join('\n')
 

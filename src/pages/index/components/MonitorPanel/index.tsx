@@ -273,7 +273,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                             )
                           })
                           : (
-                            <div>No Data</div>
+                              <div>No Data</div>
                             )}
                       </TooltipContent>
                     </Tooltip>

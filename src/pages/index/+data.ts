@@ -38,8 +38,7 @@ export async function data(pageContext: PageContext) {
         lastUpdate,
       } as DataV1,
     }
-  }
-  catch (err) {
+  } catch (err) {
     if (isWorkerEnv) {
       throw err
     }

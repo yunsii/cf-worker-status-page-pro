@@ -31,6 +31,7 @@ export const TooltipTrigger = React.forwardRef<
 
   // `asChild` allows the user to pass any element as the anchor
   if (asChild && React.isValidElement(children)) {
+    // eslint-disable-next-line react/no-clone-element
     return React.cloneElement(
       children,
       context.getReferenceProps({
@@ -45,6 +46,7 @@ export const TooltipTrigger = React.forwardRef<
   return (
     <button
       ref={ref}
+      type='button'
       // The user can style the trigger based on the state
       data-state={context.open ? 'open' : 'closed'}
       {...context.getReferenceProps(props)}

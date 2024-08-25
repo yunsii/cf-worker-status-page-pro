@@ -21,8 +21,7 @@ async function handleFetchEvent(event: FetchEvent) {
 addEventListener('fetch', (event: FetchEvent) => {
   try {
     event.respondWith(handleFetchEvent(event))
-  }
-  catch (err) {
+  } catch (err) {
     handleFetchError(event, err)
   }
 })

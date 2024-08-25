@@ -34,8 +34,7 @@ export default function Page() {
     if (searchValue.trim()) {
       url.searchParams.set('filter', searchValue)
       history.replaceState(null, '', url)
-    }
-    else {
+    } else {
       url.searchParams.delete('filter')
       history.replaceState(null, '', url)
     }

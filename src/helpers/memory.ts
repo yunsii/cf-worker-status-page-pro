@@ -28,8 +28,9 @@ export function memorySizeOf(obj: unknown) {
               }
               sizeOf(obj[key as keyof typeof obj])
             }
+          } else {
+            bytes += obj.toString().length * 2
           }
-          else { bytes += obj.toString().length * 2 }
           break
         }
       }
@@ -40,14 +41,13 @@ export function memorySizeOf(obj: unknown) {
   function formatByteSize(bytes: number) {
     if (bytes < aKiB) {
       return `${bytes} bytes`
-    }
-    else if (bytes < aMiB) {
+    } else if (bytes < aMiB) {
       return `${(bytes / aMiB).toFixed(3)} KiB`
-    }
-    else if (bytes < aGiB) {
+    } else if (bytes < aGiB) {
       return `${(bytes / aMiB).toFixed(3)} MiB`
+    } else {
+      return `${(bytes / aGiB).toFixed(3)} GiB`
     }
-    else { return `${(bytes / aGiB).toFixed(3)} GiB` }
   }
 
   return { bytes, humanize: formatByteSize(sizeOf(obj)) }

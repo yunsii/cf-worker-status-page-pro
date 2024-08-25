@@ -10,8 +10,7 @@ export async function handleSsr(url: string, userAgent: string | null) {
   const { httpResponse } = pageContext
   if (!httpResponse) {
     return null
-  }
-  else {
+  } else {
     const { statusCode: status, headers } = httpResponse
     const stream = httpResponse.getReadableWebStream()
     return new Response(stream, { headers, status })

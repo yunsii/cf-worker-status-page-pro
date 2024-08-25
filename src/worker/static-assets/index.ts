@@ -43,8 +43,7 @@ export async function handleStaticAssets(event: FetchEvent) {
     response.headers.set('Feature-Policy', 'none')
 
     return response
-  }
-  catch (e) {
+  } catch (e) {
     // if an error is thrown try to serve the asset at 404.html
     if (!DEBUG) {
       try {
@@ -56,8 +55,7 @@ export async function handleStaticAssets(event: FetchEvent) {
           ...notFoundResponse,
           status: 404,
         })
-      }
-      catch (e) {}
+      } catch (e) {}
     }
 
     if (e instanceof Error) {

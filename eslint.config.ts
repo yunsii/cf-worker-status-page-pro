@@ -1,4 +1,4 @@
-import janna from '@jannajs/lint/dist/eslint/index.js'
+import janna from '@jannajs/lint/eslint'
 
 export default janna({
   tailwind: true,
@@ -7,5 +7,9 @@ export default janna({
       config: 'tailwind.config.ts',
       tags: ['cls', 'tw'],
     },
+  },
+}, {
+  rules: {
+    'style/jsx-indent': ['off'],
   },
 })
