@@ -3,7 +3,7 @@ import React from 'react'
 
 import Empty from './Empty'
 
-import type { DataV1 } from '#src/worker/_helpers/store'
+import type { DataV1, MonitorAllData } from '#src/worker/_helpers/store'
 import type { Monitor } from '#src/types'
 
 import { getDisplayDays, getHistoryDates } from '#src/worker/_helpers/datetime'
@@ -91,21 +91,30 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
 
           return searchFields.filter(Boolean).some((item) => item!.includes(keyword))
         }).map((item) => {
-          const monitorData = data.monitorHistoryData![item]
+          // New monitor id maybe no monitor data
+          const monitorData = data.monitorHistoryData![item] as MonitorAllData | undefined
           const monitorConfig = allMonitors.find((monitorItem) => monitorItem.id === item)
           const targetMonitor = allMonitors.find((monitorItem) => monitorItem.id === item)
           const title = targetMonitor?.name || item
 
-          const lastCheckInfo = [{
-            key: 'Last Check Time',
-            value: monitorData.lastCheck.time ? new Date(monitorData.lastCheck.time).toLocaleString() : null,
-          }, {
-            key: 'Last Check Operational',
-            value: monitorData.lastCheck.operational.toString(),
-          }, {
-            key: 'Last Check Status',
-            value: `${monitorData.lastCheck.status} / ${monitorData.lastCheck.statusText}`,
-          }]
+          const firstCheckInfo = monitorData
+            ? [{
+                key: 'First Check',
+                value: monitorData.firstCheck,
+              }]
+            : []
+          const lastCheckInfo = monitorData
+            ? [{
+                key: 'Last Check Time',
+                value: monitorData.lastCheck.time ? new Date(monitorData.lastCheck.time).toLocaleString() : null,
+              }, {
+                key: 'Last Check Operational',
+                value: monitorData.lastCheck.operational.toString(),
+              }, {
+                key: 'Last Check Status',
+                value: `${monitorData.lastCheck.status} / ${monitorData.lastCheck.statusText}`,
+              }]
+            : []
 
           const info = [
             ...(monitorConfig
@@ -129,7 +138,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
                   },
                 ]
               : []),
-            { key: 'First Check', value: monitorData.firstCheck },
+            ...firstCheckInfo,
             ...lastCheckInfo,
           ].filter((item) => !(typeof item.value === 'undefined' || item.value === null)) as {
             key: string
@@ -185,8 +194,8 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
               </div>
               <ul className='flex gap-1'>
                 {getHistoryDates().map((dateItem) => {
-                  const targetDateChecksItem = getTargetDateChecksItem(monitorData, dateItem)
-                  const renderStatus = getChecksItemRenderStatus(monitorData, dateItem)
+                  const targetDateChecksItem = monitorData ? getTargetDateChecksItem(monitorData, dateItem) : undefined
+                  const renderStatus = monitorData ? getChecksItemRenderStatus(monitorData, dateItem) : undefined
 
                   let color = cls`bg-gray-300`
                   let textColor = cls`text-gray-300`
