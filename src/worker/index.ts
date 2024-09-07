@@ -18,6 +18,8 @@ async function handleFetchEvent(event: FetchEvent) {
   return response
 }
 
+// Worker startup time limit: 400ms
+// ref: https://developers.cloudflare.com/workers/platform/limits/#worker-startup-time
 addEventListener('fetch', (event: FetchEvent) => {
   try {
     event.respondWith(handleFetchEvent(event))
@@ -26,6 +28,10 @@ addEventListener('fetch', (event: FetchEvent) => {
   }
 })
 
+// Time limit:
+// When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds.
+// When the schedule interval is more than 1 hour, a scheduled Worker may run for up to 15 minutes.
+// ref: https://developers.cloudflare.com/workers/platform/limits/#cpu-time Note block
 addEventListener('scheduled', (event: FetchEvent) => {
   event.waitUntil(handleCronTrigger(event))
 })
