@@ -6,12 +6,14 @@ import type { IndexPageData } from './+data'
 
 import { usePageContext } from '#src/renderer/usePageContext'
 import { config } from '#src/config'
+import { useMounted } from '#src/hooks/mounted'
 
 export default function Page() {
   const { data: { allMonitors, kvData, filter } } = usePageContext<IndexPageData>()
   const inputRef = useRef<HTMLInputElement>(null)
   const [inputFocused, setInputFocused] = useState(false)
   const [searchValue, setSearchValue] = useState(filter || '')
+  const { mounted } = useMounted()
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -39,6 +41,10 @@ export default function Page() {
       history.replaceState(null, '', url)
     }
   }, [searchValue])
+
+  if (config.settings.csr === true && !mounted) {
+    return null
+  }
 
   return (
     <div className='container max-w-screen-xl pt-4'>

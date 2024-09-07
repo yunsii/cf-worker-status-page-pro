@@ -32,4 +32,10 @@ export interface Settings {
   collectResponseTimes: boolean
   /** Ref: https://developers.cloudflare.com/workers/platform/limits default=50 */
   subrequestsLimit?: number
+  /**
+   * Client side render, default: false
+   *
+   * If status page exceeded CPU time limit with SSR, you can use CSR instead.
+   */
+  csr?: boolean
 }
