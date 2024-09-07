@@ -5,7 +5,7 @@ compatibility_flags = [ "streams_enable_constructors" ]
 compatibility_date = "2021-09-29"
 workers_dev = true
 # npx --no -- wrangler kv:namespace create cf-worker-status-page-pro
-kv_namespaces = [ { binding = "KV_STORE", id = "83944df5b99b43a5804ba0902579194f" } ]
+kv_namespaces = [ { binding = "KV_STORE", id = "83944df5b99b43a5804ba0902579194f" }, ]
 
 [site]
 bucket = "./dist/client"
@@ -14,8 +14,14 @@ bucket = "./dist/client"
 port = 3000
 
 [env.production]
-kv_namespaces = [ { binding = "KV_STORE", id = "83944df5b99b43a5804ba0902579194f" } ]
+kv_namespaces = [ { binding = "KV_STORE", id = "83944df5b99b43a5804ba0902579194f" }, ]
 
 [env.production.triggers]
-# https://crontab.guru/#*/2_*_*_*_*
-crons = [ "*/2 * * * *" ]
+crons = [
+  # https://crontab.guru/#*/2_*_*_*_*
+  # Check monitors
+  "*/2 * * * *",
+  # https://crontab.guru/#*/2_*_*_*_*
+  # Update remote csv monitors
+  "*/10 * * * *",
+]
