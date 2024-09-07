@@ -39,3 +39,5 @@ export interface Settings {
    */
   csr?: boolean
 }
+
+export type FetchHandler = Required<ExportedHandler>['fetch']

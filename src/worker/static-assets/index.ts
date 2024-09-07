@@ -5,6 +5,7 @@
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 
 import type { Options } from '@cloudflare/kv-asset-handler'
+import type { FetchHandler } from '#src/types'
 
 /**
  * The DEBUG flag will do two things that help during development:
@@ -15,7 +16,7 @@ import type { Options } from '@cloudflare/kv-asset-handler'
  */
 const DEBUG = false
 
-export async function handleStaticAssets(event: FetchEvent) {
+export const handleStaticAssets: FetchHandler = async (request, env, ctx) => {
   const options: Partial<Options> = {}
 
   /**
@@ -31,7 +32,12 @@ export async function handleStaticAssets(event: FetchEvent) {
         bypassCache: true,
       }
     }
-    const page = await getAssetFromKV(event, options)
+    const page = await getAssetFromKV({
+      request,
+      waitUntil(promise) {
+        return ctx.waitUntil(promise)
+      },
+    }, options)
 
     // allow headers to be altered
     const response = new Response(page.body, page)
@@ -47,7 +53,12 @@ export async function handleStaticAssets(event: FetchEvent) {
     // if an error is thrown try to serve the asset at 404.html
     if (!DEBUG) {
       try {
-        const notFoundResponse = await getAssetFromKV(event, {
+        const notFoundResponse = await getAssetFromKV({
+          request,
+          waitUntil(promise) {
+            return ctx.waitUntil(promise)
+          },
+        }, {
           mapRequestToAsset: (req) => new Request(`${new URL(req.url).origin}/404.html`, req),
         })
 

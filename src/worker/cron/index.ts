@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { getCheckLocation } from '../_helpers/location'
-import { prepareData, upsertKvStore } from '../_helpers/store'
+import { prepareData, upsertData } from '../_helpers/store'
 import { getNotificationCount, getNotifications } from '../_helpers/notifications'
 import { getDate } from '../_helpers/datetime'
 
@@ -12,7 +12,7 @@ import { config } from '#src/config'
 
 const defaultSubrequestsLimit = 50
 
-export async function handleCronTrigger(event: FetchEvent) {
+export async function handleCronTrigger(ctx: ExecutionContext) {
   const subrequests = new Subrequests()
   const checkedIds: string[] = []
   let allOperational = true
@@ -60,7 +60,7 @@ export async function handleCronTrigger(event: FetchEvent) {
       }, () => {
         subrequests.notified()
       })
-      event.waitUntil(Promise.allSettled(notifications.map((item) => item())))
+      ctx.waitUntil(Promise.allSettled(notifications.map((item) => item())))
     }
 
     subrequests.checked()
@@ -142,6 +142,6 @@ export async function handleCronTrigger(event: FetchEvent) {
     },
   }
 
-  await upsertKvStore(kvData, allMonitors)
+  await upsertData(kvData, allMonitors)
   return new Response('OK')
 }
