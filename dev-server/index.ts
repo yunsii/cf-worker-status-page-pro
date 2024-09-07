@@ -6,6 +6,8 @@ import { createServer } from 'vite'
 import fetch from 'node-fetch'
 import compression from 'compression'
 
+import type { CustomPageContext } from '#src/worker/ssr'
+
 const PORT = 3000
 
 async function startServer() {
@@ -25,9 +27,10 @@ async function startServer() {
   app.get('*', async (req, res, next) => {
     const userAgent = req.headers['user-agent'] || null
 
-    const pageContextInit = {
+    const pageContextInit: CustomPageContext = {
+      env: {} as any,
       urlOriginal: req.originalUrl,
-      fetch,
+      fetch: fetch as any,
       userAgent,
     }
     const pageContext = await renderPage(pageContextInit)

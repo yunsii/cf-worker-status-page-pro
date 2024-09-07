@@ -8,14 +8,14 @@ import { getDevKvData } from '#src/helpers/dev-data'
 // Use search param `no-remote-monitors` to prevent load remote monitors
 // Use search param `no-data` preview no data page
 export async function data(pageContext: PageContext) {
-  const { urlParsed } = pageContext
+  const { env, urlParsed } = pageContext
   const searchParams = new URLSearchParams(urlParsed.search)
   const searchParamKeys = Array.from(searchParams.keys())
   // Only use remote monitors in worker env
   const useRemoteMonitors = isWorkerEnv
 
   try {
-    const { allMonitors, kvData } = await getCoreData(useRemoteMonitors)
+    const { allMonitors, kvData } = await getCoreData(env, useRemoteMonitors)
     const { lastUpdate, monitorHistoryData } = kvData
 
     if (!monitorHistoryData) {
@@ -45,7 +45,7 @@ export async function data(pageContext: PageContext) {
     // eslint-disable-next-line no-console
     console.debug('Error ignored in non worker env.')
 
-    const allMonitors = await getAllMonitors(useRemoteMonitors)
+    const allMonitors = await getAllMonitors(env, useRemoteMonitors)
     if (searchParamKeys.includes('no-data')) {
       return { allMonitors, kvData: null }
     }

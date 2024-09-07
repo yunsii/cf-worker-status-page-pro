@@ -12,7 +12,7 @@ import { config } from '#src/config'
 
 const defaultSubrequestsLimit = 50
 
-export async function handleCronTrigger(ctx: ExecutionContext) {
+export async function handleCronTrigger(env: Env, ctx: ExecutionContext) {
   const subrequests = new Subrequests()
   const checkedIds: string[] = []
   let allOperational = true
@@ -21,7 +21,7 @@ export async function handleCronTrigger(ctx: ExecutionContext) {
   subrequests.required()
   const checkDay = getDate()
 
-  const { kvData, allMonitors, uncheckMonitors, lastCheckedMonitorIds } = await prepareData()
+  const { kvData, allMonitors, uncheckMonitors, lastCheckedMonitorIds } = await prepareData(env)
   subrequests.required(2)
   console.debug('uncheckMonitors:', uncheckMonitors)
 
@@ -142,6 +142,6 @@ export async function handleCronTrigger(ctx: ExecutionContext) {
     },
   }
 
-  await upsertData(kvData, allMonitors)
+  await upsertData(env, kvData, allMonitors)
   return new Response('OK')
 }

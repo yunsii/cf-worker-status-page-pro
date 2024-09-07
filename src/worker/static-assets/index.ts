@@ -3,9 +3,14 @@
 // ********************************************
 
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-expect-error
+import manifestJSON from '__STATIC_CONTENT_MANIFEST'
 
 import type { Options } from '@cloudflare/kv-asset-handler'
 import type { FetchHandler } from '#src/types'
+
+const assetManifest = JSON.parse(manifestJSON)
 
 /**
  * The DEBUG flag will do two things that help during development:
@@ -17,7 +22,12 @@ import type { FetchHandler } from '#src/types'
 const DEBUG = false
 
 export const handleStaticAssets: FetchHandler = async (request, env, ctx) => {
-  const options: Partial<Options> = {}
+  const options: Partial<Options> = {
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-expect-error
+    ASSET_NAMESPACE: env.__STATIC_CONTENT,
+    ASSET_MANIFEST: assetManifest,
+  }
 
   /**
    * You can add custom logic to how we fetch your assets

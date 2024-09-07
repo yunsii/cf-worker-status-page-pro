@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tsx ./dev-server",
     "public:assets": "tsx ./scripts/public-assets.ts",
-    "build": "npm run public:assets && vite build",
+    "build": "npm run wrangler:types && tsc && npm run public:assets && vite build",
     "preview": "npm run build && wrangler dev",
     "preview:production": "npm run build && wrangler dev --env production",
     "deploy": "npm run build && wrangler deploy --env production",

@@ -12,7 +12,7 @@ const handleFetchEvent: FetchHandler = async (request, env, context) => {
   const userAgent = request.headers.get('User-Agent')
 
   if (!isAssetUrl(url)) {
-    const response = await handleSsr(url, userAgent)
+    const response = await handleSsr(env, url, userAgent)
     if (response !== null) {
       return response
     }
@@ -21,7 +21,7 @@ const handleFetchEvent: FetchHandler = async (request, env, context) => {
   return response
 }
 
-const handler: ExportedHandler = {
+const handler: ExportedHandler<Env> = {
   // Worker startup time limit: 400ms
   // ref: https://developers.cloudflare.com/workers/platform/limits/#worker-startup-time
   fetch: async (request, env, ctx) => {
@@ -39,11 +39,11 @@ const handler: ExportedHandler = {
     switch (controller.cron) {
       case '*/2 * * * *':
         // Every two minutes
-        await handleCronTrigger(ctx)
+        await handleCronTrigger(env, ctx)
         break
       case '*/10 * * * *':
         // Every ten minutes
-        await handleRemoteMonitors()
+        await handleRemoteMonitors(env)
         break
     }
   },

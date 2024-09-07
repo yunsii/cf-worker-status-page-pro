@@ -1,7 +1,16 @@
 import { renderPage } from 'vike/server'
 
-export async function handleSsr(url: string, userAgent: string | null) {
-  const pageContextInit = {
+export interface CustomPageContext {
+  env: Env
+  urlOriginal: string
+  // ref: https://vike.dev/cloudflare-workers#universal-fetch
+  fetch: typeof fetch
+  userAgent: string | null
+}
+
+export async function handleSsr(env: Env, url: string, userAgent: string | null) {
+  const pageContextInit: CustomPageContext = {
+    env,
     urlOriginal: url,
     fetch: (...args: Parameters<typeof fetch>) => fetch(...args),
     userAgent,
