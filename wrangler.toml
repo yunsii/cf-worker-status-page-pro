@@ -21,7 +21,7 @@ crons = [
   # https://crontab.guru/#*/2_*_*_*_*
   # Check monitors
   "*/2 * * * *",
-  # https://crontab.guru/#*/2_*_*_*_*
+  # https://crontab.guru/#*/10_*_*_*_*
   # Update remote csv monitors
   "*/10 * * * *",
 ]

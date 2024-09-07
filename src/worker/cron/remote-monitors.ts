@@ -7,7 +7,7 @@ import getRemoteMonitors from '#src/helpers/monitors'
 export async function handleRemoteMonitors(env: Env) {
   try {
     const result = await getRemoteMonitors()
-    upsertRemoteMonitors(env, result)
+    await upsertRemoteMonitors(env, result)
   } catch (err) {
     console.error(err)
   }
