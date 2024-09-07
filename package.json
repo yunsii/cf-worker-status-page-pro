@@ -1,7 +1,7 @@
 {
   "name": "cf-worker-status-page-pro",
   "type": "module",
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@9.9.0",
   "scripts": {
     "dev": "tsx ./dev-server",
     "public:assets": "tsx ./scripts/public-assets.ts",
@@ -16,22 +16,22 @@
     "postinstall": "npm run public:assets"
   },
   "dependencies": {
-    "@brillout/json-serializer": "^0.5.8",
-    "@cloudflare/kv-asset-handler": "^0.2.0",
-    "@floating-ui/react": "^0.26.9",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@brillout/json-serializer": "^0.5.13",
+    "@cloudflare/kv-asset-handler": "^0.3.4",
+    "@floating-ui/react": "^0.26.23",
+    "@vitejs/plugin-react": "^4.3.1",
     "node-fetch": "^2.6.9",
     "papaparse": "^5.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-streaming": "^0.3.9",
+    "react-streaming": "^0.3.43",
     "tagged-classnames-free": "0.1.0-next.1",
-    "vike": "0.4.165",
-    "wrangler": "^3.32.0"
+    "vike": "0.4.195",
+    "wrangler": "^3.75.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.27.1",
-    "@cloudflare/workers-types": "^4.20240222.0",
+    "@cloudflare/workers-types": "^4.20240903.0",
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@commitlint/types": "^19.0.3",
@@ -48,7 +48,7 @@
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.4.18",
     "compression": "^1.7.4",
-    "dedent": "^1.5.1",
+    "dedent": "^1.5.3",
     "eslint": "9.9.1",
     "eslint-plugin-format": "^0.1.2",
     "eslint-plugin-react-hooks": "5.1.0-rc-fb9a90fa48-20240614",
@@ -67,7 +67,7 @@
     "typescript": "^5.3.3",
     "unplugin-auto-import": "^0.17.5",
     "unplugin-polish-tagged-templates": "0.1.1-beta.2",
-    "vite": "^5.0.10",
+    "vite": "^5.4.3",
     "zx": "^7.2.3"
   },
   "lint-staged": {
