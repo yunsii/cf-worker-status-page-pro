@@ -23,7 +23,8 @@ export async function handleCronTrigger(env: Env, ctx: ExecutionContext) {
 
   const { kvData, allMonitors, uncheckMonitors, lastCheckedMonitorIds } = await prepareData(env)
   subrequests.required(2)
-  console.debug('uncheckMonitors:', uncheckMonitors)
+  console.log('lastCheckedMonitorIds:', lastCheckedMonitorIds)
+  console.log('uncheckMonitors:', uncheckMonitors)
 
   for (const monitor of uncheckMonitors) {
     const notificationCount = getNotificationCount()
@@ -55,6 +56,7 @@ export async function handleCronTrigger(env: Env, ctx: ExecutionContext) {
     const monitorStatusChanged = kvData.monitorHistoryData?.[monitor.id]?.lastCheck.operational !== monitorOperational
 
     if (monitorStatusChanged) {
+      console.log(`${monitor.name || monitor.id} status changed to ${monitorOperational ? 'operational' : 'un-operational'}`)
       const notifications = getNotifications(monitor, {
         status: checkResponse.status,
         statusText: checkResponse.statusText,
@@ -143,6 +145,8 @@ export async function handleCronTrigger(env: Env, ctx: ExecutionContext) {
       allOperational,
     },
   }
+  console.log('Check location:', kvData.lastUpdate.location)
+  console.log('Latest checked monitor ids:', kvData.lastUpdate.checks.ids)
 
   await upsertData(env, kvData, allMonitors)
   return new Response('OK')
