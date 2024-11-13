@@ -13,6 +13,7 @@ export default function Page() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [inputFocused, setInputFocused] = useState(false)
   const [searchValue, setSearchValue] = useState(filter || '')
+  const deferredSearch = useDeferredValue(searchValue)
   const { mounted } = useMounted()
 
   useEffect(() => {
@@ -87,7 +88,7 @@ export default function Page() {
           allMonitors={allMonitors}
           data={kvData}
           className={cls`mt-4`}
-          search={searchValue}
+          search={deferredSearch}
         />
       </main>
       <footer className='my-4 flex justify-between'>
