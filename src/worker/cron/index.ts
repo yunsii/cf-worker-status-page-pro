@@ -38,7 +38,9 @@ export async function handleCronTrigger(env: Env, ctx: ExecutionContext) {
     console.log(`Checking ${monitor.name || monitor.id} ...`)
 
     const requestStartTime = Date.now()
-    const checkResponse = await fetch(monitor.url, {
+    const fetchUrl = new URL(monitor.url)
+    fetchUrl.searchParams.append('_from-status-page', Date.now().toFixed(0))
+    const checkResponse = await fetch(fetchUrl.href, {
       method: monitor.method || 'GET',
       redirect: monitor.followRedirect ? 'follow' : 'manual',
       headers: {
