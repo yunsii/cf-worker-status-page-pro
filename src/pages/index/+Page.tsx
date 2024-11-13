@@ -34,14 +34,14 @@ export default function Page() {
 
   useEffect(() => {
     const url = new URL(window.location.href)
-    if (searchValue.trim()) {
-      url.searchParams.set('filter', searchValue)
+    if (deferredSearch.trim()) {
+      url.searchParams.set('filter', deferredSearch)
       history.replaceState(null, '', url)
     } else {
       url.searchParams.delete('filter')
       history.replaceState(null, '', url)
     }
-  }, [searchValue])
+  }, [deferredSearch])
 
   if (config.settings.csr === true && !mounted) {
     return null
