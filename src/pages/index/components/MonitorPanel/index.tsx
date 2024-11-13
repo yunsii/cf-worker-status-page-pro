@@ -89,7 +89,7 @@ const MonitorPanel: React.FC<IMonitorPanelProps> = (props) => {
 
           const searchFields = [title, targetMonitor?.id, targetMonitor?.description]
 
-          return searchFields.filter(Boolean).some((item) => item!.includes(keyword))
+          return searchFields.filter(Boolean).some((item) => item!.toLowerCase().includes(keyword.toLowerCase()))
         }).map((item) => {
           // New monitor id maybe no monitor data
           const monitorData = data.monitorHistoryData![item] as MonitorAllData | undefined
